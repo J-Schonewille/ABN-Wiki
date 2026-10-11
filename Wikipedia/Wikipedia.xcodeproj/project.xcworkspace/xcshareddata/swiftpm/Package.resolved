@@ -1,0 +1,60 @@
+{
+  "originHash" : "22288a078eb8550a2d29c1800441aefc8453a22bdc59b7f28b1a1a2dd6e71ac5",
+  "pins" : [
+    {
+      "identity" : "cocoalumberjack",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/CocoaLumberjack/CocoaLumberjack.git",
+      "state" : {
+        "revision" : "a9ed4b6f9bdedce7d77046f43adfb8ce1fd54114",
+        "version" : "3.9.0"
+      }
+    },
+    {
+      "identity" : "hcaptcha-ios-sdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/hCaptcha/HCaptcha-ios-sdk",
+      "state" : {
+        "revision" : "f95bf7391735fcbc8be02615ee698adbbe09b24d",
+        "version" : "2.13.0"
+      }
+    },
+    {
+      "identity" : "rive-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/rive-app/rive-ios.git",
+      "state" : {
+        "revision" : "b9966d5effb9aece78c70934f0bd245523e47a18",
+        "version" : "6.28.0"
+      }
+    },
+    {
+      "identity" : "rxswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ReactiveX/RxSwift",
+      "state" : {
+        "revision" : "132aea4f236ccadc51590b38af0357a331d51fa2",
+        "version" : "6.10.2"
+      }
+    },
+    {
+      "identity" : "sdwebimage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SDWebImage/SDWebImage.git",
+      "state" : {
+        "revision" : "2053b120767c42a70bcba21095f34e4cfb54a75d",
+        "version" : "5.21.3"
+      }
+    },
+    {
+      "identity" : "swift-log",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-log",
+      "state" : {
+        "revision" : "ce592ae52f982c847a4efc0dd881cc9eb32d29f2",
+        "version" : "1.6.4"
+      }
+    }
+  ],
+  "version" : 3
+}
