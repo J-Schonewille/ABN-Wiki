@@ -36,7 +36,7 @@ These are general guidelines rather than hard rules.
 - **Swift** - [swift.org API Design Guidelines](https://swift.org/documentation/api-design-guidelines/)
 
 ### Formatting
-We use Xcode's default 4 space indentation and our `.clang-format` file with the pre-commit hook setup by `scripts/setup`. Where possible, our Swift code is automatically formatted by [SwiftLint](https://github.com/realm/SwiftLint) based on the rules defined in `.swiftlint-autocorrect.yml`.
+We use Xcode's default 4 space indentation and our `.clang-format` file with the pre-commit hook setup by `scripts/setup`.
 
 ### Process and Code Review Norms
 Covered in the [process document](docs/process.md).
