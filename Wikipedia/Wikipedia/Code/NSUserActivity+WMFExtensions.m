@@ -71,6 +71,12 @@ __attribute__((annotate("returns_localized_nsstring"))) static inline NSString *
     }
     NSUserActivity *activity = [self wmf_pageActivityWithName:@"Places"];
     activity.webpageURL = articleURL;
+
+    // TODO: remove, just for a spike to open coordinates.
+    NSMutableDictionary *userInfo = [activity.userInfo mutableCopy];
+    userInfo[@"spikeURL"] = activityURL;
+    activity.userInfo = userInfo;
+
     return activity;
 }
 

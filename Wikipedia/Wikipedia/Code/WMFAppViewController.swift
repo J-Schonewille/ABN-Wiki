@@ -70,14 +70,14 @@ final class WMFAppViewController: UITabBarController, AppTabBarDelegate {
     private var splashScreenViewController: SplashScreenViewController?
 
     private var _savedArticlesFetcher: SavedArticlesFetcher?
-    
+
     private var unprocessedUserActivity: NSUserActivity?
     private var unprocessedShortcutItem: UIApplicationShortcutItem?
 
     private var backgroundTasks: [String: UIBackgroundTaskIdentifier] = [:]
     private var yearInReviewPopulateTask: Task<Void, Never>?
     private let backgroundTasksLock = NSLock()
-    
+
     private var isWaitingToResumeApp: Bool = false
     private var isMigrationComplete: Bool = false
     private var isMigrationActive: Bool = false
@@ -90,24 +90,24 @@ final class WMFAppViewController: UITabBarController, AppTabBarDelegate {
     private var _settingsNavigationController: WMFComponentNavigationController?
 
     var readingListsAlertController: ReadingListsAlertController!
-    
+
     var syncStartDate: Date?
-    
+
     var savedTabBarItemProgressBadgeManager: SavedTabBarItemProgressBadgeManager?
-    
+
     private var hasSyncErrorBeenShownThisSession: Bool = false
-    
+
     var readingListHintPresenter: WMFReadingListToastManager!
 
     private var _navigationStateController: NavigationStateController?
-    
+
     private var configuration: Configuration?
     private var router: ViewControllerRouter?
-    
+
     private var rootTabAccessibilityIdentifiers: [String?] = []
 
     // MARK: - init / deinit
-    
+
     deinit {
         NotificationCenter.default.removeObserver(self)
         NSObject.cancelPreviousPerformRequests(withTarget: self)
@@ -119,16 +119,16 @@ final class WMFAppViewController: UITabBarController, AppTabBarDelegate {
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         tipWrapper = WMFAppViewControllerTipWrapper()
-        
+
         super.init(nibName: nil, bundle: nil)
         configuration = Configuration.current
-        
+
         if let router = configuration?.router {
             self.router = ViewControllerRouter(appViewController: self, router: router)
         } else {
             router = nil
         }
-        
+
         tabItemIdentifiersToDelete = []
         tabIdentifiersToDelete = []
     }
@@ -288,7 +288,7 @@ final class WMFAppViewController: UITabBarController, AppTabBarDelegate {
         setupReadingListsHelpers()
 
         navigationItem.backButtonDisplayMode = .generic
-        
+
         registerForTraitChanges([UITraitUserInterfaceStyle.self, UITraitPreferredContentSizeCategory.self]) { [weak self] (_: WMFAppViewController, _: UITraitCollection) in
             self?.debounceTraitCollectionThemeUpdate()
         }
@@ -385,12 +385,12 @@ final class WMFAppViewController: UITabBarController, AppTabBarDelegate {
                 guard let rootVC = nav.viewControllers.first,
                       let title = rootVC.title,
                       let image = rootVC.tabBarItem.image else { continue }
-                
+
                 let identifier = rootVC.tabBarItem.accessibilityIdentifier ?? title
                 let tab = UITab(title: title, image: image, identifier: identifier) { tab in
                     return nav
                 }
-                
+
                 tab.preferredPlacement = .fixed
                 potentialTabs.append(tab)
             }
@@ -490,7 +490,7 @@ final class WMFAppViewController: UITabBarController, AppTabBarDelegate {
         guard uiIsLoaded else { return }
 
         navigationStateController.saveNavigationState(for: self, in: dataStore.viewContext)
-        
+
         do {
             try dataStore.save()
         } catch let error {
@@ -539,11 +539,11 @@ final class WMFAppViewController: UITabBarController, AppTabBarDelegate {
             wmf_showSyncEnabledPanelOncePerLoginIfNeeded(wasSyncEnabledOnDevice: wasSyncEnabledOnDevice)
         } else if !wasSyncDisabledOnDevice {
             wmf_showEnableReadingListSyncPanel(theme: theme,
-                                              oncePerLogin: true,
-                                              didNotPresentPanelCompletion: {
+                                               oncePerLogin: true,
+                                               didNotPresentPanelCompletion: {
                 self.wmf_showSyncDisabledPanelIfNeeded(wasSyncEnabledOnDevice: wasSyncEnabledOnDevice)
-                                              },
-                                              dismissHandler: nil)
+            },
+                                               dismissHandler: nil)
         }
     }
 
@@ -597,11 +597,11 @@ final class WMFAppViewController: UITabBarController, AppTabBarDelegate {
     }
 
     @objc private func autoLoginNeedsEmailToken(_ notification: Notification) {
-        
+
         guard let userInfo = notification.userInfo else {
             return
         }
-        
+
         let vc = createTwoFactorViewControllerFromAutoLoginNotification(userInfo: userInfo, needsEmailToken: true)
         if let vc = vc {
             let navVC = WMFComponentNavigationController(rootViewController: vc, modalPresentationStyle: .overFullScreen, customBarBackgroundColor: nil)
@@ -612,11 +612,11 @@ final class WMFAppViewController: UITabBarController, AppTabBarDelegate {
     }
 
     @objc private func autoLoginNeedsOathToken(_ notification: Notification) {
-        
+
         guard let userInfo = notification.userInfo else {
             return
         }
-        
+
         let vc = createTwoFactorViewControllerFromAutoLoginNotification(userInfo: userInfo, needsEmailToken: false)
         if let vc = vc {
             let navVC = WMFComponentNavigationController(rootViewController: vc, modalPresentationStyle: .overFullScreen, customBarBackgroundColor: nil)
@@ -970,7 +970,7 @@ final class WMFAppViewController: UITabBarController, AppTabBarDelegate {
             } else if UserDefaults.standard.shouldRestoreNavigationStackOnResume {
                 self.navigationStateController.restoreLastArticle(for: self, in: self.dataStore.viewContext, with: self.theme) {
                     self.hideSplashView()
-                    
+
                     do {
                         try self.dataStore.save()
                     } catch {
@@ -1061,11 +1061,11 @@ final class WMFAppViewController: UITabBarController, AppTabBarDelegate {
 
         savedArticlesFetcher?.start()
     }
-    
+
     private var homeFeedSettingsCoordinator: HomeFeedSettingsCoordinator?
-    
+
     private var oneTimeOnboardingViewController: WMFOnboardingViewController?
-    
+
     private func presentOneTimeHomeOnboardingIfNeeded() {
         guard selectedIndex == WMFAppTabType.main.rawValue else { return }
         guard let homeNav = viewControllers?[WMFAppTabType.main.rawValue] as? UINavigationController,
@@ -1161,10 +1161,10 @@ final class WMFAppViewController: UITabBarController, AppTabBarDelegate {
         oneTimeOnboardingViewController = onboardingVC
 
         DispatchQueue.main.async {
-              self.present(onboardingVC, animated: true) {
-                  TestKitchenAdapter.shared.client.getInstrument(name: "apps-home-feed").submitInteraction(action: "impression", actionSource: "feed_announce")
-                  WMFHomeDataController.shared.setHasSeenOneTimeOnboarding(true)
-              }
+            self.present(onboardingVC, animated: true) {
+                TestKitchenAdapter.shared.client.getInstrument(name: "apps-home-feed").submitInteraction(action: "impression", actionSource: "feed_announce")
+                WMFHomeDataController.shared.setHasSeenOneTimeOnboarding(true)
+            }
         }
     }
 
@@ -1290,6 +1290,15 @@ final class WMFAppViewController: UITabBarController, AppTabBarDelegate {
             if let articleURL = activity.wmf_linkURL() {
                 placesViewController.updateViewModeToMap()
                 placesViewController.showArticleURL(articleURL)
+            } else if let url = activity.userInfo?["spikeURL"] as? URL,
+                      let items = URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems,
+                      let lat = items.first(where: { $0.name == "lat" })?.value.flatMap({ Double($0) }),
+                      let lon = items.first(where: { $0.name == "lon" })?.value.flatMap({ Double($0) }) {
+
+                placesViewController.loadViewIfNeeded() // needed for cold start, wait for map to actually be there
+                placesViewController.updateViewModeToMap()
+                placesViewController.panMapToNextLocationUpdate = false // otherwise it resets when next location update comes in
+                placesViewController.zoomAndPanMapView(toLocation: CLLocation(latitude: lat, longitude: lon))
             }
 
         case .random:
@@ -1297,10 +1306,10 @@ final class WMFAppViewController: UITabBarController, AppTabBarDelegate {
             showRandomArticleFromShortcut(siteURL: siteURL, animated: animated, userInfo: activity.userInfo)
 
         case .activity:
-            
+
             let activityVC = activityTabViewController
             activityVC.disableModalsOnAppearance = true
-            
+
             dismissPresentedViewControllers()
             selectedIndex = WMFAppTabType.recent.rawValue
             currentTabNavigationController?.popToRootViewController(animated: animated)
@@ -1420,17 +1429,17 @@ final class WMFAppViewController: UITabBarController, AppTabBarDelegate {
 
     var savedArticlesFetcher: SavedArticlesFetcher? {
         guard uiIsLoaded else { return nil }
-        
+
         guard let _savedArticlesFetcher else {
             let fetcher = SavedArticlesFetcher(dataStore: dataStore)
             fetcher?.addObserver(self,
-                                forKeyPath: #keyPath(SavedArticlesFetcher.progress),
-                                options: [.initial, .new, .old],
-                                context: &kvoSavedArticlesFetcherProgress)
+                                 forKeyPath: #keyPath(SavedArticlesFetcher.progress),
+                                 options: [.initial, .new, .old],
+                                 context: &kvoSavedArticlesFetcherProgress)
             _savedArticlesFetcher = fetcher
             return fetcher
         }
-        
+
         return _savedArticlesFetcher
     }
 
@@ -1442,23 +1451,23 @@ final class WMFAppViewController: UITabBarController, AppTabBarDelegate {
             super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
         }
     }
-    
+
     private var notificationsController: WMFNotificationsController {
         return self.dataStore.notificationsController
     }
-    
+
     var dataStore: MWKDataStore {
         return MWKDataStore.shared()
     }
 
     var navigationStateController: NavigationStateController {
-        
+
         guard let _navigationStateController else {
             let navStateVC = NavigationStateController(dataStore: dataStore)
             _navigationStateController = navStateVC
             return navStateVC
         }
-        
+
         return _navigationStateController
     }
 
@@ -1538,7 +1547,7 @@ final class WMFAppViewController: UITabBarController, AppTabBarDelegate {
     }
 
     var searchTabViewController: SearchViewController {
-        
+
         guard let _searchTabViewController else {
             let vc = SearchViewController(source: .searchTab)
             vc.apply(theme: theme)
@@ -1549,12 +1558,12 @@ final class WMFAppViewController: UITabBarController, AppTabBarDelegate {
             _searchTabViewController = vc
             return vc
         }
-        
+
         return _searchTabViewController
     }
 
     var savedViewController: SavedViewController {
-        
+
         guard let _savedViewController else {
             guard let vc = UIStoryboard(name: "Saved", bundle: nil).instantiateInitialViewController() as? SavedViewController else {
                 fatalError("Unable to instantiate Saved View Controller")
@@ -1568,12 +1577,12 @@ final class WMFAppViewController: UITabBarController, AppTabBarDelegate {
             _savedViewController = vc
             return vc
         }
-        
+
         return _savedViewController
     }
 
     var activityTabViewController: WMFActivityTabViewController {
-        
+
         guard let _activityTabViewController else {
             let vc = generateActivityTab()
             vc.tabBarItem.image = UIImage(named: "tabbar-recent")
@@ -1582,12 +1591,12 @@ final class WMFAppViewController: UITabBarController, AppTabBarDelegate {
             _activityTabViewController = vc
             return vc
         }
-        
+
         return _activityTabViewController
     }
 
     var placesViewController: PlacesViewController {
-        
+
         guard let _placesViewController else {
             let vc = UIStoryboard(name: "Places", bundle: nil).instantiateInitialViewController() as! PlacesViewController
             vc.apply(theme: theme)
@@ -1597,7 +1606,7 @@ final class WMFAppViewController: UITabBarController, AppTabBarDelegate {
             _placesViewController = vc
             return vc
         }
-        
+
         return _placesViewController
     }
 
@@ -1608,13 +1617,13 @@ final class WMFAppViewController: UITabBarController, AppTabBarDelegate {
     private func shouldShowOnboarding() -> Bool {
         guard let unprocessedUserActivity,
               unprocessedUserActivity.shouldSkipOnboarding else {
-            
+
             return !UserDefaults.standard.bool(forKey: Self.wmfDidShowOnboarding)
         }
-        
+
         setDidShowOnboarding()
         return false
-        
+
     }
 
     private func setDidShowOnboarding() {
@@ -1760,7 +1769,7 @@ final class WMFAppViewController: UITabBarController, AppTabBarDelegate {
         if let languageCode = dataStore.languageLinkController.appLanguage?.languageCode {
             WMFTempAccountDataController.shared.checkWikiTempAccountAvailability(language: languageCode, isCheckingPrimaryWiki: true)
         }
-       
+
     }
 
 }
@@ -1777,11 +1786,11 @@ extension WMFAppViewController: UITabBarControllerDelegate {
     }
 
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-        
+
         guard let current = tabBarController.selectedViewController else {
             return false
         }
-        
+
         let selected = viewController
 
         if viewController == tabBarController.selectedViewController {
@@ -1971,11 +1980,11 @@ extension WMFAppViewController: Themeable {
         view.tintColor = theme.colors.link
 
         // Ensures theming happens after main UI is loaded
-        
+
         guard (viewControllers?.count ?? 0) > 0 else {
             return
         }
-        
+
         placesViewController.apply(theme: theme)
         savedViewController.apply(theme: theme)
         searchTabViewController.apply(theme: theme)
@@ -2096,7 +2105,7 @@ extension WMFAppViewController {
         if let multiplier = note.userInfo?[FontSizeSliderViewController.WMFArticleFontSizeMultiplierKey] as? NSNumber {
             UserDefaults.standard.wmf_setArticleFontSizeMultiplier(multiplier)
         }
-        
+
     }
 }
 
@@ -2153,7 +2162,7 @@ extension WMFAppViewController {
     }
 
     var settingsViewController: SettingsTabViewController {
-        
+
         guard let _settingsViewController else {
             let vc = generateSettingsTab()
             vc.apply(theme: theme)
@@ -2162,26 +2171,26 @@ extension WMFAppViewController {
             _settingsViewController = vc
             return vc
         }
-        
+
         return _settingsViewController
     }
 
     var settingsNavigationController: WMFComponentNavigationController {
-        
+
         guard let _settingsNavigationController else {
-            
+
             let navController = WMFComponentNavigationController(rootViewController: settingsViewController, modalPresentationStyle: .overFullScreen, customBarBackgroundColor: nil)
             applyTheme(theme, toNavigationControllers: [navController])
             navController.delegate = self
             _settingsNavigationController = navController
-            
+
             return navController
         }
-         
+
         if _settingsNavigationController.viewControllers.first !== settingsViewController {
             _settingsNavigationController.viewControllers = [settingsViewController]
         }
-        
+
         return _settingsNavigationController
     }
 
@@ -2336,10 +2345,10 @@ extension WMFAppViewController {
 extension WMFAppViewController: WMFOnboardingViewDelegate {
 
     func onboardingViewDidClickPrimaryButton() {
-        
+
         let instrument = TestKitchenAdapter.shared.client.getInstrument(name: "apps-home-feed").startFunnel(name: "feed_customize")
         instrument.submitInteraction(action: "click", actionSource: "feed_announce", elementId: "customize_feed")
-        
+
         oneTimeOnboardingViewController?.dismiss(animated: true) { [weak self] in
             guard let self else { return }
             self.oneTimeOnboardingViewController = nil
@@ -2364,7 +2373,7 @@ extension WMFAppViewController: WMFOnboardingViewDelegate {
 
     func onboardingViewDidClickSecondaryButton() {
         TestKitchenAdapter.shared.client.getInstrument(name: "apps-home-feed").submitInteraction(action: "click", actionSource: "feed_announce", elementId: "accept_default")
-        
+
         WMFHomeDataController.shared.setSeeFirstContent(.community)
         if let homeViewModel = homeCoordinator?.homeViewController?.viewModel {
             homeViewModel.selectedTab = .community
