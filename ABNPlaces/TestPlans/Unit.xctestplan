@@ -1,0 +1,23 @@
+{
+  "configurations" : [
+    {
+      "id" : "90A790CB-A81D-4B38-BDC8-FED1F028B43A",
+      "name" : "Default",
+      "options" : {}
+    }
+  ],
+  "defaultOptions" : {
+    "language" : "en",
+    "region" : "US"
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:ABNPlacesKit",
+        "identifier" : "ABNPlacesCoreTests",
+        "name" : "ABNPlacesCoreTests"
+      }
+    }
+  ],
+  "version" : 1
+}

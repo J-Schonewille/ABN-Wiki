@@ -1,0 +1,62 @@
+# SwiftLint for the ABNPlaces app
+included:
+  - ABNPlaces
+  - ABNPlacesKit/Sources
+  - ABNPlacesKit/Tests
+
+excluded:
+  - ABNPlacesKit/.build
+
+disabled_rules:
+  # Whitespace, braces and line breaks: the formatter's layout.
+  - attribute_name_spacing
+  - closing_brace
+  - closure_parameter_position
+  - colon
+  - comma
+  - function_name_whitespace
+  - leading_whitespace
+  - no_space_in_method_call
+  - opening_brace
+  - return_arrow_whitespace
+  - statement_position
+  - switch_case_alignment
+  - trailing_comma
+  - trailing_newline
+  - trailing_whitespace
+  - vertical_parameter_alignment
+  - vertical_whitespace
+  # Syntax the formatter rewrites, with the swift-format rule that does it.
+  - control_statement  # NoParensAroundConditions
+  - empty_parentheses_with_trailing_closure  # NoEmptyTrailingClosureParentheses
+  - implicit_getter  # UseSingleLinePropertyGetter
+  - private_over_fileprivate  # FileScopedDeclarationPrivacy
+  - redundant_void_return  # NoVoidReturnOnFunctionSignature
+  - syntactic_sugar  # UseShorthandTypeNames
+  - trailing_semicolon  # DoNotUseSemicolons
+  - void_return  # ReturnVoidInsteadOfEmptyTuple
+
+opt_in_rules:
+  # Safety: no hidden crashes.
+  - force_unwrapping
+  - implicitly_unwrapped_optional
+  - fatal_error_message
+  - discouraged_optional_boolean
+  # Concurrency: errors thrown in a Task must be handled; `async` must be earned.
+  - unhandled_throwing_task
+  - async_without_await
+  # SwiftUI: view-owned state stays private.
+  - private_swiftui_state
+  # Accessibility: images need a label (or are marked decorative); tap targets need the button trait.
+  - accessibility_label_for_image
+  - accessibility_trait_for_button
+  # Correctness and performance.
+  - identical_operands
+  - contains_over_first_not_nil
+  - empty_count
+  - first_where
+  - last_where
+  - sorted_first_last
+  - toggle_bool
+  # Tests: specific XCTest matchers give better failure messages.
+  - xct_specific_matcher
