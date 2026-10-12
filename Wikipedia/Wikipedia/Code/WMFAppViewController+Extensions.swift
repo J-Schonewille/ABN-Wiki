@@ -34,10 +34,6 @@ extension Notification.Name {
 
 extension WMFAppViewController {
 
-    @objc func shouldOpenAppOnSearchTab() -> Bool {
-        return WMFSettingsDataController.shared.openAppOnSearchTab()
-    }
-
     @objc internal func processLinkUserActivity(_ userActivity: NSUserActivity) -> Bool {
 
         guard let linkURL = userActivity.wmf_linkURL() else {

@@ -32,7 +32,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("\nSimulator container directory:\n\t\(FileManager.default.wmf_containerPath())\n")
 #endif
         UserDefaults.standard.wmf_migrateFontSizeMultiplier()
-        UserDefaults.standard.shouldRestoreNavigationStackOnResume = shouldRestoreNavigationStackOnResumeAfterBecomingActive()
+        // Every launch opens Places, so the last article isn't reopened on top of it,
+        // just like the app already skipped it when it opened on the Search tab.
+        UserDefaults.standard.shouldRestoreNavigationStackOnResume = false
         
         UIApplication.shared.registerForRemoteNotifications()
         
@@ -117,13 +119,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if storedData == nil {
             WMFSettingsDataController.shared.setAutoSignTalkPageDiscussions(true)
         }
-    }
-
-    private func shouldRestoreNavigationStackOnResumeAfterBecomingActive() -> Bool {
-        // Read from WMFData store (migrated key)
-        let userDefaultsStore = WMFDataEnvironment.current.userDefaultsStore
-        let shouldOpenAppOnSearchTab: Bool = (try? userDefaultsStore?.load(key: WMFUserDefaultsKey.openAppOnSearchTab.rawValue)) ?? false
-        return !shouldOpenAppOnSearchTab
     }
 
     /// Background app refresh with the daily top read notification prototype enabled. Local notifications are only

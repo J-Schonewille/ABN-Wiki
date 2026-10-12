@@ -1,7 +1,7 @@
 import XCTest
 import WMFComponents
 
-/// Represents the Home tab after app launch or onboarding dismissal.
+/// Represents the Home tab. The app launches on Places, so `WikipediaAppRobot.home` selects Home first.
 struct HomeRobot: ScreenshotCapturingRobot {
     let base: UITestRobot
     private let configuration: UITestConfiguration
@@ -125,6 +125,21 @@ extension HomeRobot {
     func openProfile(file: StaticString = #filePath, line: UInt = #line) -> ProfileRobot {
         base.tapButton(withIdentifier: AccessibilityIdentifiers.Profile.button, file: file, line: line)
         return ProfileRobot(base: base).assertVisible(file: file, line: line)
+    }
+
+    /// Selects Home after launch. The app opens on Places, which on a fresh install shows a one-time location
+    /// prompt over the tab bar. Once the tab buttons exist, the prompt can be closed.
+    @discardableResult
+    func selectAfterLaunch(file: StaticString = #filePath, line: UInt = #line) -> Self {
+        base.assertExists(
+            rootTabButton(for: .home),
+            timeout: 15,
+            description: RootTab.home.description,
+            file: file,
+            line: line
+        )
+        dismissPlacesLocationPromptIfNeeded(file: file, line: line)
+        return tapRootTab(.home, file: file, line: line)
     }
 
     @discardableResult

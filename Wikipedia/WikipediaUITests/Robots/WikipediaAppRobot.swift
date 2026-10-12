@@ -14,12 +14,29 @@ struct WikipediaAppRobot: ScreenshotCapturingRobot {
 // MARK: - Navigation
 
 extension WikipediaAppRobot {
+    /// The app launches on Places, so this selects the Home tab first.
     var home: HomeRobot {
-        HomeRobot(base: base, configuration: configuration)
+        HomeRobot(base: base, configuration: configuration).selectAfterLaunch()
     }
 
     var onboarding: OnboardingRobot {
         OnboardingRobot(base: base, configuration: configuration)
+    }
+}
+
+// MARK: - Screen state
+
+extension WikipediaAppRobot {
+    @discardableResult
+    func assertRootTabSelected(_ tab: HomeRobot.RootTab, file: StaticString = #filePath, line: UInt = #line) -> Self {
+        base.assertSelected(
+            base.app.buttons.matching(identifier: tab.accessibilityIdentifier).firstMatch,
+            timeout: 15,
+            description: tab.description,
+            file: file,
+            line: line
+        )
+        return self
     }
 }
 

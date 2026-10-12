@@ -17,6 +17,22 @@ nonisolated public struct PlacesLocationRequest: Equatable, Sendable {
     /// Longer names are cut to this many characters.
     static let maximumNameLength = 100
 
+    /// How far north or south the map is centred at most. MapKit's map ends at about 85°, and the size of
+    /// the area it shows is only right up to 84.5°. Without this, a link to a pole showed an empty grid.
+    static let maximumMapCenterLatitude: CLLocationDegrees = 84.5
+
+    /// The exact place the link asks for. The pin goes here; unlike `mapCenter`, it's never capped.
+    public var coordinate: CLLocationCoordinate2D {
+        CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
+
+    /// Where to centre the map: the requested place, with the latitude capped at 84.5° north or south.
+    /// Only the map centre is capped; `latitude` keeps the full range from -90 to 90.
+    public var mapCenter: CLLocationCoordinate2D {
+        let limit = Self.maximumMapCenterLatitude
+        return CLLocationCoordinate2D(latitude: min(max(latitude, -limit), limit), longitude: longitude)
+    }
+
     public init?(url: URL) {
 
         func value(_ key: String) -> String? {

@@ -1,6 +1,11 @@
 import XCTest
 
 final class HomeUITests: XCTestCase {
+    func testLaunchOpensPlaces() throws {
+        launchWikipediaAppRobot(onboardingState: .completed)
+            .assertRootTabSelected(.places)
+    }
+
     func testHome() throws {
         enum ScreenshotNames: String {
             case initial = "Home Initial"

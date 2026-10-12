@@ -578,6 +578,11 @@ class PlacesViewController: ArticleLocationCollectionViewController, UISearchBar
                 return
             }
 
+            // When the user searches for something themselves, the pin from the link goes away.
+            if search.origin == .user {
+                linkedLocationPin = nil
+            }
+
             updateSearchBarText(forSearch: search)
 
             performSearch(search)
@@ -2100,6 +2105,34 @@ class PlacesViewController: ArticleLocationCollectionViewController, UISearchBar
         currentSearch = PlaceSearch(filter: .top, type: .location, origin: .user, sortStyle: .links, string: nil, region: region, localizedDescription: title, searchResult: searchResult, siteURL: articleURL.wmf_site)
     }
 
+    /// The pin for the last link's location, titled with its name. It's a plain map pin, not an article, so it
+    /// stays when the articles around it are regrouped. The next link replaces it; the user's own search removes it.
+    private var linkedLocationPin: MKPointAnnotation? {
+        didSet {
+            if let oldValue {
+                mapView.removeAnnotation(oldValue)
+            }
+            if let linkedLocationPin {
+                mapView.addAnnotation(linkedLocationPin)
+            }
+        }
+    }
+
+    /// Shows a place that another app asked for: puts a pin on it, centres the map on it like "recenter on my
+    /// location" does, and lists the top articles around it. 
+    func showLocation(_ request: PlacesLocationRequest) {
+        loadViewIfNeeded()
+        // With VoiceOver on, Places stays in the list.
+        if !UIAccessibility.isVoiceOverRunning {
+            updateViewModeToMap()
+        }
+        // false, otherwise the first GPS update would move the map back to where the user is.
+        panMapToNextLocationUpdate = false
+        linkedLocationPin = MKPointAnnotation(coordinate: request.coordinate, title: request.name, subtitle: nil)
+        let center = request.mapCenter
+        zoomAndPanMapView(toLocation: CLLocation(latitude: center.latitude, longitude: center.longitude))
+    }
+
     fileprivate func searchForFirstSearchSuggestion() {
         if !searchSuggestionController.searches[PlaceSearchSuggestionController.completionSection].isEmpty {
             currentSearch = searchSuggestionController.searches[PlaceSearchSuggestionController.completionSection][0]
@@ -2546,6 +2579,12 @@ extension PlacesViewController: MKMapViewDelegate {
                 let placeView = mapView.dequeueReusableAnnotationView(withIdentifier: userViewReuseIdentifier) as? UserLocationAnnotationView ?? UserLocationAnnotationView(annotation: userLocation, reuseIdentifier: userViewReuseIdentifier)
                 placeView.annotation = userLocation
                 return placeView
+            }
+            if annotation === linkedLocationPin {
+                let pinView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: nil)
+                pinView.displayPriority = .required
+                pinView.zPriority = .max
+                return pinView
             }
             return nil
         }

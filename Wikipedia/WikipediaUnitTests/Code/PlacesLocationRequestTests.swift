@@ -140,6 +140,56 @@ struct PlacesLocationRequestTests {
         #expect(request.name == nil)
     }
 
+    // MARK: Map centre
+
+    struct MapCenterCase: Sendable, CustomTestStringConvertible {
+        let query: String
+        let centerLatitude: Double
+
+        var testDescription: String { query }
+    }
+
+    static let mapCenterCases: [MapCenterCase] = [
+        // MapKit can't centre on a pole, nor at 85°, where its map ends.
+        MapCenterCase(query: "lat=90&lon=0", centerLatitude: 84.5),
+        MapCenterCase(query: "lat=-90&lon=0", centerLatitude: -84.5),
+        MapCenterCase(query: "lat=90&lon=180", centerLatitude: 84.5),
+        MapCenterCase(query: "lat=-90&lon=-180", centerLatitude: -84.5),
+        MapCenterCase(query: "lat=85&lon=4.8", centerLatitude: 84.5),
+        MapCenterCase(query: "lat=-85&lon=4.8", centerLatitude: -84.5),
+        MapCenterCase(query: "lat=84.5000001&lon=-42.5", centerLatitude: 84.5),
+        MapCenterCase(query: "lat=-86.5&lon=166.6", centerLatitude: -84.5),
+        // 84.5° itself, and everything closer to the equator, stays as it is.
+        MapCenterCase(query: "lat=84.5&lon=4.8", centerLatitude: 84.5),
+        MapCenterCase(query: "lat=-84.5&lon=4.8", centerLatitude: -84.5),
+        MapCenterCase(query: "lat=84.4999999&lon=4.8", centerLatitude: 84.4999999),
+        MapCenterCase(query: "lat=52.3547498&lon=4.8339215", centerLatitude: 52.3547498),
+        MapCenterCase(query: "lat=-33.8567844&lon=151.213108", centerLatitude: -33.8567844),
+        MapCenterCase(query: "lat=0&lon=0", centerLatitude: 0)
+    ]
+
+    @Test(arguments: mapCenterCases)
+    func capsMapCenterLatitude(_ mapCenterCase: MapCenterCase) throws {
+        let url = try Self.placesURL(query: mapCenterCase.query)
+
+        let request = try #require(PlacesLocationRequest(url: url))
+
+        #expect(request.mapCenter.latitude == mapCenterCase.centerLatitude)
+        #expect(request.mapCenter.longitude == request.longitude)
+    }
+
+    @Test
+    func keepsPoleInCoordinateWhileMapCenterMoves() throws {
+        let url = try Self.placesURL(query: "lat=90&lon=0&name=North%20Pole")
+
+        let request = try #require(PlacesLocationRequest(url: url))
+
+        // The pin goes on `coordinate`, exactly where the link says. Only the map centre is capped.
+        #expect(request.coordinate.latitude == 90)
+        #expect(request.coordinate.longitude == 0)
+        #expect(request.mapCenter.latitude == 84.5)
+    }
+
     // MARK: Totality
 
     /// Thousands of arbitrary inputs from a fixed seed: the same inputs on every run.
@@ -162,6 +212,7 @@ struct PlacesLocationRequestTests {
             acceptedCount += 1
             #expect((-90...90).contains(request.latitude), "lat=\(latitudeText.debugDescription)")
             #expect((-180...180).contains(request.longitude), "lon=\(longitudeText.debugDescription)")
+            #expect((-84.5...84.5).contains(request.mapCenter.latitude), "lat=\(latitudeText.debugDescription)")
             if let name = request.name {
                 #expect(Self.isSanitized(name), "name=\(rawName.debugDescription)")
             }

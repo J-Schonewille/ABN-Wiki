@@ -20,7 +20,6 @@ import WMFNativeLocalizations
 
 // MARK: - Constants
 
-private let wmfTimeBeforeShowingHomeScreenOnLaunch: TimeInterval = 24 * 60 * 60
 private let wmfRemoteAppConfigCheckInterval: CFTimeInterval = 3 * 60 * 60
 private let wmfTempAccountConfigCheckInterval: CFTimeInterval = 3 * 60 * 60
 private let wmfLastRemoteAppConfigCheckAbsoluteTimeKey = "WMFLastRemoteAppConfigCheckAbsoluteTimeKey"
@@ -404,12 +403,10 @@ final class WMFAppViewController: UITabBarController, AppTabBarDelegate {
 
         updateUserInterfaceStyleOfNavigationControllersForCurrentTheme()
 
-        let shouldOpenOnSearch = shouldOpenAppOnSearchTab()
-        if shouldOpenOnSearch && selectedIndex != WMFAppTabType.search.rawValue {
-            selectedIndex = WMFAppTabType.search.rawValue
-            searchTabViewController.makeSearchBarBecomeFirstResponder()
-        } else if selectedIndex != WMFAppTabType.main.rawValue {
-            selectedIndex = WMFAppTabType.main.rawValue
+        // The app always opens on Places, also with "Open app on Search tab" on.
+        // A link, shortcut or notification can then select another tab.
+        if selectedIndex != WMFAppTabType.places.rawValue {
+            selectedIndex = WMFAppTabType.places.rawValue
         }
     }
 
@@ -980,10 +977,6 @@ final class WMFAppViewController: UITabBarController, AppTabBarDelegate {
                     done()
                 }
                 _ = self.dataStore.authenticationManager.authStateIsTemporary
-            } else if self.shouldShowHomeOnLaunch() {
-                self.hideSplashView()
-                self.showHome()
-                done()
             } else {
                 self.hideSplashView()
                 done()
@@ -1291,10 +1284,7 @@ final class WMFAppViewController: UITabBarController, AppTabBarDelegate {
                 placesViewController.updateViewModeToMap()
                 placesViewController.showArticleURL(articleURL)
             } else if let request = activity.wmf_placesLocationRequest {
-                placesViewController.loadViewIfNeeded() // needed for cold start, wait for map to actually be there
-                placesViewController.updateViewModeToMap()
-                placesViewController.panMapToNextLocationUpdate = false // otherwise it resets when next location update comes in
-                placesViewController.zoomAndPanMapView(toLocation: CLLocation(latitude: request.latitude, longitude: request.longitude))
+                placesViewController.showLocation(request)
             }
 
         case .random:
@@ -1408,12 +1398,6 @@ final class WMFAppViewController: UITabBarController, AppTabBarDelegate {
             }
         }
         return contentURL
-    }
-
-    private func shouldShowHomeOnLaunch() -> Bool {
-        guard !shouldOpenAppOnSearchTab() else { return false }
-        guard let resignActiveDate = UserDefaults.standard.wmf_appResignActiveDate() else { return false }
-        return abs(resignActiveDate.timeIntervalSinceNow) >= wmfTimeBeforeShowingHomeScreenOnLaunch
     }
 
     func visibleArticleViewController() -> ArticleViewController? {
