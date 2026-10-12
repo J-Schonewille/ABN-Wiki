@@ -60,3 +60,7 @@ opt_in_rules:
   - toggle_bool
   # Tests: specific XCTest matchers give better failure messages.
   - xct_specific_matcher
+
+# A TODO may be committed, a FIXME may not: strict lint only fails on FIXME.
+todo:
+  only: [FIXME]

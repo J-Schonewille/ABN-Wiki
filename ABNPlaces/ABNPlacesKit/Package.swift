@@ -1,5 +1,4 @@
 // swift-tools-version: 6.2
-// The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
@@ -24,16 +23,41 @@ let package = Package(
             targets: ["ABNPlacesFeature"]
         )
     ],
+    dependencies: [
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", exact: "1.17.1")
+    ],
     targets: [
-        .target(name: "ABNPlacesCore", swiftSettings: coreSettings),
+        // Loggers that only log in DEBUG builds.
+        .target(name: "ABNLogging", swiftSettings: coreSettings),
+        // HTTP requests, their errors and JSON decoding.
+        .target(name: "ABNNetworking", dependencies: ["ABNLogging"], swiftSettings: coreSettings),
+        .testTarget(name: "ABNNetworkingTests", dependencies: ["ABNNetworking"], swiftSettings: coreSettings),
+        .target(
+            name: "ABNPlacesCore",
+            dependencies: [
+                "ABNLogging",
+                "ABNNetworking",
+                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "DependenciesMacros", package: "swift-dependencies"),
+            ],
+            swiftSettings: coreSettings
+        ),
         .testTarget(
             name: "ABNPlacesCoreTests",
-            dependencies: ["ABNPlacesCore"],
+            dependencies: [
+                "ABNPlacesCore",
+                "ABNNetworking",
+                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "DependenciesTestSupport", package: "swift-dependencies"),
+            ],
             resources: [.process("Fixtures")],
             swiftSettings: coreSettings
         ),
-        .target(name: "ABNPlacesFeature", dependencies: ["ABNPlacesCore"], swiftSettings: uiSettings),
-
+        .target(
+            name: "ABNPlacesFeature",
+            dependencies: ["ABNPlacesCore", .product(name: "Dependencies", package: "swift-dependencies")],
+            swiftSettings: uiSettings
+        ),
     ],
     swiftLanguageModes: [.v6]
 )

@@ -14,7 +14,7 @@ DESTINATION ?= platform=iOS Simulator,name=iPhone 17,OS=26.5
 DERIVED_DATA ?=
 
 XCODEBUILD = xcodebuild -project ABNPlaces.xcodeproj -scheme ABNPlaces -destination '$(DESTINATION)' \
-	$(if $(DERIVED_DATA),-derivedDataPath '$(DERIVED_DATA)')
+	-skipMacroValidation -disableAutomaticPackageResolution $(if $(DERIVED_DATA),-derivedDataPath '$(DERIVED_DATA)')
 
 SWIFT_SOURCES = ABNPlaces ABNPlacesKit/Sources ABNPlacesKit/Tests ABNPlacesKit/Package.swift
 

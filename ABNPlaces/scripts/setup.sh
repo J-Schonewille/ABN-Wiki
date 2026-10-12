@@ -48,10 +48,13 @@ else
 fi
 
 step "Swift packages"
-if xcodebuild -resolvePackageDependencies -project ABNPlaces.xcodeproj -scheme ABNPlaces >/dev/null; then
+# Uses the committed Package.resolved as it is: if it no longer matches Package.swift, this fails instead of
+# quietly rewriting it.
+if xcodebuild -resolvePackageDependencies -project ABNPlaces.xcodeproj -scheme ABNPlaces \
+    -disableAutomaticPackageResolution >/dev/null; then
     ok "Packages resolved"
 else
-    problem "Package resolution failed: check your network connection and run this script again"
+    problem "Package resolution failed: check your network connection, and that Package.resolved matches Package.swift"
 fi
 
 if [ -d ../Wikipedia ]; then
@@ -62,6 +65,7 @@ fi
 echo
 if [ "$problems" -eq 0 ]; then
     echo "All set. Open ABNPlaces.xcodeproj and run the ABNPlaces scheme. Before committing, run make check."
+    echo "If Xcode asks about swift-dependencies' macros on the first build, choose Trust & Enable."
 else
     echo "$problems problem(s) above. The app still builds and runs; these only affect make check."
     exit 1
