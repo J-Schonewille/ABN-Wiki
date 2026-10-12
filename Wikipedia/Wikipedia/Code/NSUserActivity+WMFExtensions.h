@@ -16,6 +16,7 @@ typedef NS_ENUM(NSUInteger, WMFUserActivityType) {
 };
 
 extern NSString *const WMFNavigateToActivityNotification;
+extern NSString *const WMFPlacesURLUserInfoKey; // 1 shared key, for objc, swift & tests
 
 @interface NSUserActivity (WMFExtensions)
 

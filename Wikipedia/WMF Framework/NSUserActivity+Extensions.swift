@@ -13,4 +13,15 @@ public extension NSUserActivity {
 
         return namespace == .special && title == "ReadingLists"
     }
+
+    /// Turns `wikipedia://places?lat=…&lon=…` into a `PlacesLocationRequest`.
+    /// The default places logic has priority, so if the link has a link URL, this is nil.
+    var wmf_placesLocationRequest: PlacesLocationRequest? {
+        guard wmf_type() == .places,
+              wmf_linkURL() == nil,
+              let url = userInfo?[WMFPlacesURLUserInfoKey] as? URL else {
+            return nil
+        }
+        return PlacesLocationRequest(url: url)
+    }
 }

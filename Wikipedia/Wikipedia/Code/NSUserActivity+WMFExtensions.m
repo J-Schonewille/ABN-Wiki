@@ -5,6 +5,7 @@
 @import MobileCoreServices;
 
 NSString *const WMFNavigateToActivityNotification = @"WMFNavigateToActivityNotification";
+NSString *const WMFPlacesURLUserInfoKey = @"WMFPlacesURL";
 
 // Use to suppress "User-facing text should use localized string macro" Analyzer warning
 // where appropriate.
@@ -72,9 +73,8 @@ __attribute__((annotate("returns_localized_nsstring"))) static inline NSString *
     NSUserActivity *activity = [self wmf_pageActivityWithName:@"Places"];
     activity.webpageURL = articleURL;
 
-    // TODO: remove, just for a spike to open coordinates.
     NSMutableDictionary *userInfo = [activity.userInfo mutableCopy];
-    userInfo[@"spikeURL"] = activityURL;
+    userInfo[WMFPlacesURLUserInfoKey] = activityURL;
     activity.userInfo = userInfo;
 
     return activity;

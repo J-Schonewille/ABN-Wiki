@@ -1290,16 +1290,12 @@ final class WMFAppViewController: UITabBarController, AppTabBarDelegate {
             if let articleURL = activity.wmf_linkURL() {
                 placesViewController.updateViewModeToMap()
                 placesViewController.showArticleURL(articleURL)
-            } else if let url = activity.userInfo?["spikeURL"] as? URL,
-                     let items = URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems,
-                     let lat = items.first(where: { $0.name == "lat" })?.value.flatMap({ Double($0) }),
-                     let lon = items.first(where: { $0.name == "lon" })?.value.flatMap({ Double($0) }) {
-
-               placesViewController.loadViewIfNeeded() // needed for cold start, wait for map to actually be there
-               placesViewController.updateViewModeToMap()
-               placesViewController.panMapToNextLocationUpdate = false // otherwise it resets when next location update comes in
-               placesViewController.zoomAndPanMapView(toLocation: CLLocation(latitude: lat, longitude: lon))
-           }
+            } else if let request = activity.wmf_placesLocationRequest {
+                placesViewController.loadViewIfNeeded() // needed for cold start, wait for map to actually be there
+                placesViewController.updateViewModeToMap()
+                placesViewController.panMapToNextLocationUpdate = false // otherwise it resets when next location update comes in
+                placesViewController.zoomAndPanMapView(toLocation: CLLocation(latitude: request.latitude, longitude: request.longitude))
+            }
 
         case .random:
             dismissPresentedViewControllers()
