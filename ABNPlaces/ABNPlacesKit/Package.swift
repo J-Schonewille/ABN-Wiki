@@ -18,15 +18,18 @@ let package = Package(
     defaultLocalization: "en",
     platforms: [.iOS(.v18)],
     products: [
-        .library(
-            name: "ABNPlacesFeature",
-            targets: ["ABNPlacesFeature"]
-        )
+        .library(name: "ABNPlacesFeature", targets: ["ABNPlacesFeature"]),
+        // For the snapshot tests in the app's project.
+        .library(name: "ABNDesignSystem", targets: ["ABNDesignSystem"]),
+        .library(name: "ABNPlacesCore", targets: ["ABNPlacesCore"]),
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-dependencies", exact: "1.17.1")
     ],
     targets: [
+        // Colors, spacing and the shared components. Knows nothing about places.
+        .target(name: "ABNDesignSystem", swiftSettings: uiSettings),
+        .testTarget(name: "ABNDesignSystemTests", dependencies: ["ABNDesignSystem"], swiftSettings: coreSettings),
         // Loggers that only log in DEBUG builds.
         .target(name: "ABNLogging", swiftSettings: coreSettings),
         // HTTP requests, their errors and JSON decoding.
@@ -55,8 +58,23 @@ let package = Package(
         ),
         .target(
             name: "ABNPlacesFeature",
-            dependencies: ["ABNPlacesCore", .product(name: "Dependencies", package: "swift-dependencies")],
+            dependencies: [
+                "ABNDesignSystem",
+                "ABNPlacesCore",
+                .product(name: "Dependencies", package: "swift-dependencies"),
+            ],
+            resources: [.process("Resources")],
             swiftSettings: uiSettings
+        ),
+        .testTarget(
+            name: "ABNPlacesFeatureTests",
+            dependencies: [
+                "ABNPlacesFeature",
+                "ABNPlacesCore",
+                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "DependenciesTestSupport", package: "swift-dependencies"),
+            ],
+            swiftSettings: coreSettings
         ),
     ],
     swiftLanguageModes: [.v6]

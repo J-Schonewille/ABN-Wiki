@@ -1,6 +1,7 @@
 # SwiftLint for the ABNPlaces app
 included:
   - ABNPlaces
+  - SnapshotTests
   - ABNPlacesKit/Sources
   - ABNPlacesKit/Tests
 

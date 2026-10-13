@@ -1,0 +1,493 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%@ degrees" : {
+      "comment" : "Spoken by VoiceOver: zero degrees.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ degrees"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ graden"
+          }
+        }
+      }
+    },
+    "%@ degrees east" : {
+      "comment" : "Spoken by VoiceOver: a longitude east.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ degrees east"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ graden oost"
+          }
+        }
+      }
+    },
+    "%@ degrees north" : {
+      "comment" : "Spoken by VoiceOver: a latitude north.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ degrees north"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ graden noord"
+          }
+        }
+      }
+    },
+    "%@ degrees south" : {
+      "comment" : "Spoken by VoiceOver: a latitude south.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ degrees south"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ graden zuid"
+          }
+        }
+      }
+    },
+    "%@ degrees west" : {
+      "comment" : "Spoken by VoiceOver: a longitude west.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ degrees west"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ graden west"
+          }
+        }
+      }
+    },
+    "%@, %@" : {
+      "comment" : "A label in two parts, already written out: latitude and longitude, or name and coordinates.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, %2$@"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, %2$@"
+          }
+        }
+      }
+    },
+    "%@. %@" : {
+      "comment" : "Announced by VoiceOver when places couldn't load: a title, then a message, both written out.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@. %2$@"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@. %2$@"
+          }
+        }
+      }
+    },
+    "%@°" : {
+      "comment" : "Zero degrees: on the equator or the prime meridian.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@°"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@°"
+          }
+        }
+      }
+    },
+    "%@° E" : {
+      "comment" : "A longitude east of Greenwich, such as 4.8339° E.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@° E"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@° O"
+          }
+        }
+      }
+    },
+    "%@° N" : {
+      "comment" : "A latitude north of the equator, such as 52.3547° N.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@° N"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@° N"
+          }
+        }
+      }
+    },
+    "%@° S" : {
+      "comment" : "A latitude south of the equator, such as 54.8019° S.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@° S"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@° Z"
+          }
+        }
+      }
+    },
+    "%@° W" : {
+      "comment" : "A longitude west of Greenwich, such as 3.7496° W.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@° W"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@° W"
+          }
+        }
+      }
+    },
+    "Can't connect" : {
+      "comment" : "Title when the device can't reach the server.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Can't connect"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kan geen verbinding maken"
+          }
+        }
+      }
+    },
+    "Check back later." : {
+      "comment" : "Message under “No places yet”.",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kijk later nog eens."
+          }
+        }
+      }
+    },
+    "Check your internet connection to load places." : {
+      "comment" : "Message under “Can't connect”.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check your internet connection to load places."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Controleer je internetverbinding om plaatsen te laden."
+          }
+        }
+      }
+    },
+    "Couldn't load places" : {
+      "comment" : "Title when the server failed.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Couldn't load places"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kan plaatsen niet laden"
+          }
+        }
+      }
+    },
+    "Couldn't read places" : {
+      "comment" : "Title when the server sent unreadable data.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Couldn't read places"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kan plaatsen niet lezen"
+          }
+        }
+      }
+    },
+    "Install the Wikipedia app to see this place on the map." : {
+      "comment" : "Alert message when the Wikipedia app isn't installed.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install the Wikipedia app to see this place on the map."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installeer de Wikipedia-app om deze plaats op de kaart te zien."
+          }
+        }
+      }
+    },
+    "Loading places" : {
+      "comment" : "VoiceOver label of the placeholders while places load.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading places"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plaatsen worden geladen"
+          }
+        }
+      }
+    },
+    "No places yet" : {
+      "comment" : "Title when the feed has no places.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No places yet"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nog geen plaatsen"
+          }
+        }
+      }
+    },
+    "OK" : {
+      "comment" : "Alert button that closes the alert.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        }
+      }
+    },
+    "Opens in Wikipedia" : {
+      "comment" : "VoiceOver hint of a place card.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens in Wikipedia"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opent in Wikipedia"
+          }
+        }
+      }
+    },
+    "Places" : {
+      "comment" : "Title of the list of places.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Places"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plaatsen"
+          }
+        }
+      }
+    },
+    "Places updated" : {
+      "comment" : "Announced by VoiceOver when a retry has loaded the places.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Places updated"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plaatsen bijgewerkt"
+          }
+        }
+      }
+    },
+    "Retry" : {
+      "comment" : "Button that tries to load the places again.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Retry"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Probeer opnieuw"
+          }
+        }
+      }
+    },
+    "Something went wrong on the server. Try again in a moment." : {
+      "comment" : "Message under “Couldn't load places”.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Something went wrong on the server. Try again in a moment."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Er ging iets mis bij de server. Probeer het zo opnieuw."
+          }
+        }
+      }
+    },
+    "The server sent something this app doesn't understand. Try again later." : {
+      "comment" : "Message under “Couldn't read places”.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The server sent something this app doesn't understand. Try again later."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De server stuurde iets wat deze app niet begrijpt. Probeer het later opnieuw."
+          }
+        }
+      }
+    },
+    "Unnamed place" : {
+      "comment" : "Card title for a place without a name.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unnamed place"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naamloze plaats"
+          }
+        }
+      }
+    },
+    "Wikipedia isn't installed" : {
+      "comment" : "Alert title when opening fails.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wikipedia isn't installed"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wikipedia is niet geïnstalleerd"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

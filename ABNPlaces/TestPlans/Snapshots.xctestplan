@@ -1,0 +1,23 @@
+{
+  "configurations" : [
+    {
+      "id" : "E5C85458-75DF-40BE-9B6A-7B8AE0A64D70",
+      "name" : "Default",
+      "options" : {}
+    }
+  ],
+  "defaultOptions" : {
+    "language" : "en",
+    "region" : "US"
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:ABNPlaces.xcodeproj",
+        "identifier" : "898CA4DDA4A4228AE6613F55",
+        "name" : "ABNPlacesSnapshotTests"
+      }
+    }
+  ],
+  "version" : 1
+}

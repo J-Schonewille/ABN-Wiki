@@ -2,12 +2,13 @@
 # One-step developer setup. It is safe to re-run.
 #
 # You don't need it to build and run on a simulator: clone, open ABNPlaces.xcodeproj and press Run.
-# It prepares the tools a developer uses before committing (make check): it checks Xcode, the pinned
-# SwiftLint and swift-format, and it resolves the Swift packages.
+# It prepares the tools a developer uses before committing (make check): it checks Xcode, the simulator the
+# snapshots are recorded on, the pinned SwiftLint and swift-format, and it resolves the Swift packages.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
 readonly MINIMUM_XCODE_MAJOR=26
+readonly SNAPSHOT_RUNTIME="iOS 26.5"
 readonly SWIFTLINT_VERSION="$(cat .swiftlint-version)"
 problems=0
 
@@ -21,6 +22,14 @@ if [ "${xcode_version%%.*}" -ge "$MINIMUM_XCODE_MAJOR" ]; then
     ok "Xcode $xcode_version ($(xcode-select -p))"
 else
     problem "Xcode $xcode_version is too old: install Xcode $MINIMUM_XCODE_MAJOR or later, then run xcode-select -s"
+fi
+
+step "iPhone 17 with $SNAPSHOT_RUNTIME, for the snapshot tests"
+if xcrun simctl list devices available | awk -v runtime="-- $SNAPSHOT_RUNTIME --" \
+    '$0 == runtime { found = 1; next } /^-- / { found = 0 } found' | grep -q '^ *iPhone 17 ('; then
+    ok "iPhone 17 with $SNAPSHOT_RUNTIME is available"
+else
+    problem "No iPhone 17 with $SNAPSHOT_RUNTIME: add the runtime in Xcode → Settings → Components"
 fi
 
 step "SwiftLint $SWIFTLINT_VERSION (pinned in .swiftlint-version)"
