@@ -52,11 +52,31 @@ struct CreatePlaceScreen {
         )
     }
 
+    func waitUntilNoFieldHasKeyboardFocus(file: StaticString = #filePath, line: UInt = #line) {
+        let hasNoKeyboardFocus = NSPredicate(format: "hasKeyboardFocus == false")
+        for (name, field) in [("Name", nameField), ("Latitude", latitudeField), ("Longitude", longitudeField)] {
+            let unfocused = XCTNSPredicateExpectation(predicate: hasNoKeyboardFocus, object: field)
+            XCTAssertEqual(
+                XCTWaiter.wait(for: [unfocused], timeout: PlacesUITestCase.timeout),
+                .completed,
+                "\(name) still has keyboard focus",
+                file: file,
+                line: line
+            )
+        }
+    }
+
     // MARK: Actions
 
     func type(_ text: String, into field: XCUIElement) {
         field.tap()
         field.typeText(text)
+    }
+
+    /// Taps beside the end of the Longitude helper text. A field also takes taps just outside its border, and on
+    /// iPhone the keyboard covers the space below Save.
+    func tapOutsideTheFields() {
+        longitudeField.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 1.75)).tap()
     }
 
     func save() {

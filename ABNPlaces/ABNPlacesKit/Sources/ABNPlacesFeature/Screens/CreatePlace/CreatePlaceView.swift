@@ -23,6 +23,7 @@ struct CreatePlaceView: View {
             }
             .padding(DSSpacing.medium)
         }
+        .onTapGesture { focusedField = nil }  // A tap outside the fields hides the keyboard.
         .background(DSColor.background)
         .navigationTitle(Text("New place", bundle: #bundle, comment: "Title of the create-place sheet."))
         .navigationBarTitleDisplayMode(.inline)

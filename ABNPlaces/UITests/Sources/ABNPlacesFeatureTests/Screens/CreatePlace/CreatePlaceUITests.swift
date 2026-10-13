@@ -35,6 +35,17 @@ final class CreatePlaceUITests: PlacesUITestCase {
     }
 
     @MainActor
+    func testTappingOutsideTheFieldsHidesTheKeyboard() {
+        let sheet = launch(.success).openCreatePlace()
+        sheet.latitudeField.tap()
+        sheet.waitForKeyboardFocus(on: sheet.latitudeField)
+
+        sheet.tapOutsideTheFields()
+
+        sheet.waitUntilNoFieldHasKeyboardFocus()
+    }
+
+    @MainActor
     func testCancelClosesTheSheet() {
         let list = launch(.success)
         let sheet = list.openCreatePlace()
