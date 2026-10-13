@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A4EBF37F1AC9CEE207B22CD /* ABNPlacesUITestContract in Frameworks */ = {isa = PBXBuildFile; productRef = 4BA81DB3A1F654FE2CD9A503 /* ABNPlacesUITestContract */; };
 		31A9271BEF95AEF8E9C6C837 /* ABNPlacesCore in Frameworks */ = {isa = PBXBuildFile; productRef = 361BFFE4C323643B00E15E81 /* ABNPlacesCore */; };
 		32ADCC447B9A11DFB808EFF1 /* ABNDesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 4CB7FF837BCA320FC176614B /* ABNDesignSystem */; };
 		4096FEFAB57F7165E5FD6676 /* ABNPlacesFeature in Frameworks */ = {isa = PBXBuildFile; productRef = EEA7A3B4067BC436D4EAD8F9 /* ABNPlacesFeature */; };
 		C106EFB87844B076B977BA1A /* AccessibilitySnapshot in Frameworks */ = {isa = PBXBuildFile; productRef = BDCEBC8BD274432AA26DC345 /* AccessibilitySnapshot */; };
 		CCD65691307CCE3700860A9F /* ABNPlacesFeature in Frameworks */ = {isa = PBXBuildFile; productRef = CCD65690307CCE3700860A9F /* ABNPlacesFeature */; };
 		D3A93B448865C8D4D8A400E6 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = C949F1733FEA57D0E4467B3A /* Dependencies */; };
+		F241752BFB3017FD2D73AF72 /* ABNPlacesCore in Frameworks */ = {isa = PBXBuildFile; productRef = 01174C575210CD949054CBF4 /* ABNPlacesCore */; };
 		F424F2CE08F7136D1A85490F /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 00073472059238A023F8FC1E /* SnapshotTesting */; };
 /* End PBXBuildFile section */
 
@@ -24,6 +26,13 @@
 			remoteGlobalIDString = 35A653DF089A4D5EE4070BD1;
 			remoteInfo = ABNPlacesTestHost;
 		};
+		ADC0BC3A69BA5FF5B6EB5588 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 000000000000000000000000 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 000000000000000100000000;
+			remoteInfo = ABNPlaces;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +40,7 @@
 		000000000000000000000120 /* ABNPlaces.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ABNPlaces.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A47544623580C881AA7E502 /* ABNPlacesTestHost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ABNPlacesTestHost.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D6D84DE8EE92F0337D2B6A8 /* ABNPlacesSnapshotTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ABNPlacesSnapshotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F9AE28682C5B75A86B50FBD5 /* ABNPlacesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ABNPlacesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -42,6 +52,11 @@
 		499657EFF06CC9AB00D3F984 /* Host */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Host;
+			sourceTree = "<group>";
+		};
+		691E42CBDBAF6E7406082BC6 /* UITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = UITests;
 			sourceTree = "<group>";
 		};
 		7FD04638AC8B00B2F3631630 /* Sources */ = {
@@ -57,6 +72,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				CCD65691307CCE3700860A9F /* ABNPlacesFeature in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		576212AA8B1018B09D78D7B4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1A4EBF37F1AC9CEE207B22CD /* ABNPlacesUITestContract in Frameworks */,
+				F241752BFB3017FD2D73AF72 /* ABNPlacesCore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,6 +113,7 @@
 				000000000000000000000010 /* ABNPlaces */,
 				000000000000000000000030 /* ABNPlacesKit */,
 				9366E81023979B2049397C0B /* SnapshotTests */,
+				691E42CBDBAF6E7406082BC6 /* UITests */,
 				000000000000000000000020 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -99,6 +124,7 @@
 				000000000000000000000120 /* ABNPlaces.app */,
 				5A47544623580C881AA7E502 /* ABNPlacesTestHost.app */,
 				7D6D84DE8EE92F0337D2B6A8 /* ABNPlacesSnapshotTests.xctest */,
+				F9AE28682C5B75A86B50FBD5 /* ABNPlacesUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -188,6 +214,31 @@
 			productReference = 7D6D84DE8EE92F0337D2B6A8 /* ABNPlacesSnapshotTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		9B6674195D269B4249934BC2 /* ABNPlacesUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E635C8914B14583E99B00749 /* Build configuration list for PBXNativeTarget "ABNPlacesUITests" */;
+			buildPhases = (
+				E822ACC04AD759A060DCB06A /* Sources */,
+				576212AA8B1018B09D78D7B4 /* Frameworks */,
+				CDCF5EE43B865B3AEF2B86AA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3C06F1824F6C28B60F23E0D6 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				691E42CBDBAF6E7406082BC6 /* UITests */,
+			);
+			name = ABNPlacesUITests;
+			packageProductDependencies = (
+				4BA81DB3A1F654FE2CD9A503 /* ABNPlacesUITestContract */,
+				01174C575210CD949054CBF4 /* ABNPlacesCore */,
+			);
+			productName = ABNPlacesUITests;
+			productReference = F9AE28682C5B75A86B50FBD5 /* ABNPlacesUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -207,6 +258,10 @@
 					898CA4DDA4A4228AE6613F55 = {
 						CreatedOnToolsVersion = 27.0;
 						TestTargetID = 35A653DF089A4D5EE4070BD1;
+					};
+					9B6674195D269B4249934BC2 = {
+						CreatedOnToolsVersion = 27.0;
+						TestTargetID = 000000000000000100000000;
 					};
 				};
 			};
@@ -233,6 +288,7 @@
 				000000000000000100000000 /* ABNPlaces */,
 				35A653DF089A4D5EE4070BD1 /* ABNPlacesTestHost */,
 				898CA4DDA4A4228AE6613F55 /* ABNPlacesSnapshotTests */,
+				9B6674195D269B4249934BC2 /* ABNPlacesUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -246,6 +302,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		A991F7820EF0C9C47156BBA6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CDCF5EE43B865B3AEF2B86AA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -305,9 +368,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E822ACC04AD759A060DCB06A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		3C06F1824F6C28B60F23E0D6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ABNPlaces;
+			target = 000000000000000100000000 /* ABNPlaces */;
+			targetProxy = ADC0BC3A69BA5FF5B6EB5588 /* PBXContainerItemProxy */;
+		};
 		6EEF583D7D6FEA8969A2979A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = ABNPlacesTestHost;
@@ -545,6 +621,29 @@
 			};
 			name = Release;
 		};
+		016E88D5A771B1BAE2402E10 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jschonewille.ABNPlaces.uitests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ABNPlaces;
+			};
+			name = Debug;
+		};
 		CEE6CA397289BD0DE4059520 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -600,6 +699,29 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
+		};
+		E6BE1FEACF5642D234991E40 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jschonewille.ABNPlaces.uitests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ABNPlaces;
+			};
+			name = Release;
 		};
 		F10608A271166E8D81D61265 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -696,6 +818,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		E635C8914B14583E99B00749 /* Build configuration list for PBXNativeTarget "ABNPlacesUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E6BE1FEACF5642D234991E40 /* Release */,
+				016E88D5A771B1BAE2402E10 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -731,9 +862,17 @@
 			package = 2CC54BF9544B4C6069FB52DB /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
 			productName = SnapshotTesting;
 		};
+		01174C575210CD949054CBF4 /* ABNPlacesCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ABNPlacesCore;
+		};
 		361BFFE4C323643B00E15E81 /* ABNPlacesCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ABNPlacesCore;
+		};
+		4BA81DB3A1F654FE2CD9A503 /* ABNPlacesUITestContract */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ABNPlacesUITestContract;
 		};
 		4CB7FF837BCA320FC176614B /* ABNDesignSystem */ = {
 			isa = XCSwiftPackageProductDependency;

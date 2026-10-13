@@ -22,6 +22,8 @@ let package = Package(
         // For the snapshot tests in the app's project.
         .library(name: "ABNDesignSystem", targets: ["ABNDesignSystem"]),
         .library(name: "ABNPlacesCore", targets: ["ABNPlacesCore"]),
+        // For the UI tests in the app's project.
+        .library(name: "ABNPlacesUITestContract", targets: ["ABNPlacesUITestContract"]),
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-dependencies", exact: "1.17.1")
@@ -61,6 +63,7 @@ let package = Package(
             dependencies: [
                 "ABNDesignSystem",
                 "ABNPlacesCore",
+                "ABNPlacesUITestContract",
                 .product(name: "Dependencies", package: "swift-dependencies"),
             ],
             resources: [.process("Resources")],
@@ -71,11 +74,14 @@ let package = Package(
             dependencies: [
                 "ABNPlacesFeature",
                 "ABNPlacesCore",
+                "ABNPlacesUITestContract",
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "DependenciesTestSupport", package: "swift-dependencies"),
             ],
             swiftSettings: coreSettings
         ),
+        // Accessibility identifiers and DEBUG launch arguments, shared by the app and its UI tests. No dependencies.
+        .target(name: "ABNPlacesUITestContract", swiftSettings: coreSettings),
     ],
     swiftLanguageModes: [.v6]
 )

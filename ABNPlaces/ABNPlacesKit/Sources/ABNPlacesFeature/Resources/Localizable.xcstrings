@@ -205,6 +205,57 @@
         }
       }
     },
+    "A point or a comma both work, for example 4.8339 or 4,8339." : {
+      "comment" : "Help under the longitude field.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A point or a comma both work, for example 4.8339 or 4,8339."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Je kunt een komma of een punt gebruiken, bijvoorbeeld 4,8339."
+          }
+        }
+      }
+    },
+    "A point or a comma both work, for example 52.3547 or 52,3547." : {
+      "comment" : "Help under the latitude field.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A point or a comma both work, for example 52.3547 or 52,3547."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Je kunt een komma of een punt gebruiken, bijvoorbeeld 52,3547."
+          }
+        }
+      }
+    },
+    "Add place" : {
+      "comment" : "Button that opens the create-place sheet.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add place"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voeg plaats toe"
+          }
+        }
+      }
+    },
     "Can't connect" : {
       "comment" : "Title when the device can't reach the server.",
       "localizations" : {
@@ -222,13 +273,36 @@
         }
       }
     },
-    "Check back later." : {
-      "comment" : "Message under “No places yet”.",
+    "Can't connect. Showing earlier results." : {
+      "comment" : "Banner above the list when refreshing failed because the device can't reach the server.",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Can't connect. Showing earlier results."
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kijk later nog eens."
+            "value" : "Kan geen verbinding maken. Je ziet de eerder geladen plaatsen."
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "comment" : "Closes the create-place sheet without saving.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annuleer"
           }
         }
       }
@@ -284,6 +358,108 @@
         }
       }
     },
+    "Couldn't refresh. Showing earlier results." : {
+      "comment" : "Banner above the list when refreshing failed.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Couldn't refresh. Showing earlier results."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vernieuwen is niet gelukt. Je ziet de eerder geladen plaatsen."
+          }
+        }
+      }
+    },
+    "Enter a latitude." : {
+      "comment" : "Error under an empty latitude field.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter a latitude."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vul een breedtegraad in."
+          }
+        }
+      }
+    },
+    "Enter a longitude." : {
+      "comment" : "Error under an empty longitude field.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter a longitude."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vul een lengtegraad in."
+          }
+        }
+      }
+    },
+    "Enter a number between %@ and %@." : {
+      "comment" : "Error under a latitude or longitude out of range, such as “between −90 and 90”.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter a number between %1$@ and %2$@."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vul een getal tussen %1$@ en %2$@ in."
+          }
+        }
+      }
+    },
+    "Enter a number, for example 4.8339." : {
+      "comment" : "Error under a longitude that isn't a number. Use your language's decimal separator.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter a number, for example 4.8339."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vul een getal in, bijvoorbeeld 4,8339."
+          }
+        }
+      }
+    },
+    "Enter a number, for example 52.3547." : {
+      "comment" : "Error under a latitude that isn't a number. Use your language's decimal separator.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter a number, for example 52.3547."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vul een getal in, bijvoorbeeld 52,3547."
+          }
+        }
+      }
+    },
     "Install the Wikipedia app to see this place on the map." : {
       "comment" : "Alert message when the Wikipedia app isn't installed.",
       "localizations" : {
@@ -301,6 +477,23 @@
         }
       }
     },
+    "Latitude" : {
+      "comment" : "Label of the latitude field.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Latitude"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Breedtegraad"
+          }
+        }
+      }
+    },
     "Loading places" : {
       "comment" : "VoiceOver label of the placeholders while places load.",
       "localizations" : {
@@ -314,6 +507,57 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Plaatsen worden geladen"
+          }
+        }
+      }
+    },
+    "Longitude" : {
+      "comment" : "Label of the longitude field.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Longitude"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lengtegraad"
+          }
+        }
+      }
+    },
+    "Name (optional)" : {
+      "comment" : "Label of the optional name field.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name (optional)"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naam (optioneel)"
+          }
+        }
+      }
+    },
+    "New place" : {
+      "comment" : "Title of the create-place sheet.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New place"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nieuwe plaats"
           }
         }
       }
@@ -369,6 +613,40 @@
         }
       }
     },
+    "Place added to the list" : {
+      "comment" : "Announced by VoiceOver when the create-place sheet has added a place.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Place added to the list"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plaats toegevoegd aan de lijst"
+          }
+        }
+      }
+    },
+    "Place already in the list" : {
+      "comment" : "Announced by VoiceOver when the create-place sheet saves a place that was saved before.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Place already in the list"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plaats staat al in de lijst"
+          }
+        }
+      }
+    },
     "Places" : {
       "comment" : "Title of the list of places.",
       "localizations" : {
@@ -387,7 +665,7 @@
       }
     },
     "Places updated" : {
-      "comment" : "Announced by VoiceOver when a retry has loaded the places.",
+      "comment" : "Announced by VoiceOver when a refresh or a retry has loaded the places.",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -399,6 +677,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Plaatsen bijgewerkt"
+          }
+        }
+      }
+    },
+    "Refresh" : {
+      "comment" : "Toolbar button that reloads the places.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Refresh"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vernieuw"
+          }
+        }
+      }
+    },
+    "Refresh to check again, or add a place." : {
+      "comment" : "Message under “No places yet”.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Refresh to check again, or add a place."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vernieuw om opnieuw te kijken, of voeg een plaats toe."
           }
         }
       }
@@ -416,6 +728,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Probeer opnieuw"
+          }
+        }
+      }
+    },
+    "Save" : {
+      "comment" : "Primary button of the create-place sheet: adds the place to the list.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bewaar"
           }
         }
       }

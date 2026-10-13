@@ -57,7 +57,7 @@ private struct BottomActionPreview: View {
                 Button {
                 } label: {
                     Label {
-                        Text(verbatim: "Add custom location")
+                        Text(verbatim: "Add place")
                     } icon: {
                         Image(.add)
                     }

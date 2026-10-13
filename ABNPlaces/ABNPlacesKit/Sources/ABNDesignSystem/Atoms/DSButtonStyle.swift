@@ -111,7 +111,7 @@ private struct ButtonPreview: View {
         VStack(spacing: DSSpacing.medium) {
             Button {
             } label: {
-                Text(verbatim: "Add custom location")
+                Text(verbatim: "Add place")
             }
             .buttonStyle(.dsPrimary(fullWidth: true))
             Button {

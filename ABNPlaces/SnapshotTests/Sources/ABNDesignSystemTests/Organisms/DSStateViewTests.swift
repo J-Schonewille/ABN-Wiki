@@ -23,7 +23,7 @@ private struct StateViewFixture: View {
         DSStateView(
             symbol: .offline,
             title: Text(verbatim: "Couldn't load places"),
-            message: Text(verbatim: "Check your connection and try again. You can still add a custom location.")
+            message: Text(verbatim: "Check your connection and try again. You can still add a place.")
         ) {
             Button {
             } label: {

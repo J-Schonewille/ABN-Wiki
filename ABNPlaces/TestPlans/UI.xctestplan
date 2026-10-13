@@ -1,0 +1,28 @@
+{
+  "configurations" : [
+    {
+      "id" : "025F200C-2960-4482-AB25-1D6D5FD3D6B4",
+      "name" : "Default",
+      "options" : {}
+    }
+  ],
+  "defaultOptions" : {
+    "language" : "en",
+    "region" : "US",
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:ABNPlaces.xcodeproj",
+      "identifier" : "000000000000000100000000",
+      "name" : "ABNPlaces"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:ABNPlaces.xcodeproj",
+        "identifier" : "9B6674195D269B4249934BC2",
+        "name" : "ABNPlacesUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

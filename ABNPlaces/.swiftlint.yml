@@ -2,6 +2,7 @@
 included:
   - ABNPlaces
   - SnapshotTests
+  - UITests
   - ABNPlacesKit/Sources
   - ABNPlacesKit/Tests
 

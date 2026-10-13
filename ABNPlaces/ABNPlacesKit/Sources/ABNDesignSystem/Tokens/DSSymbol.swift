@@ -22,6 +22,7 @@ nonisolated public enum DSSymbol: String, CaseIterable, Sendable {
     case fieldError = "exclamationmark.circle.fill"
     /// Add something.
     case add = "plus"
+    case refresh = "arrow.clockwise"
 }
 
 extension Image {
