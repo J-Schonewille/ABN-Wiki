@@ -307,6 +307,23 @@
         }
       }
     },
+    "Check that the Wikipedia app is installed, and allow this app to open it." : {
+      "comment" : "Alert message when Wikipedia didn't open: not installed, or iOS's prompt was cancelled.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check that the Wikipedia app is installed, and allow this app to open it."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Controleer of de Wikipedia-app is geïnstalleerd, en geef deze app toestemming om hem te openen."
+          }
+        }
+      }
+    },
     "Check your internet connection to load places." : {
       "comment" : "Message under “Can't connect”.",
       "localizations" : {
@@ -337,6 +354,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kan plaatsen niet laden"
+          }
+        }
+      }
+    },
+    "Couldn't open Wikipedia" : {
+      "comment" : "Alert title when opening Wikipedia fails.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Couldn't open Wikipedia"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kan Wikipedia niet openen"
           }
         }
       }
@@ -456,23 +490,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Vul een getal in, bijvoorbeeld 52,3547."
-          }
-        }
-      }
-    },
-    "Install the Wikipedia app to see this place on the map." : {
-      "comment" : "Alert message when the Wikipedia app isn't installed.",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Install the Wikipedia app to see this place on the map."
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Installeer de Wikipedia-app om deze plaats op de kaart te zien."
           }
         }
       }
@@ -796,23 +813,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Naamloze plaats"
-          }
-        }
-      }
-    },
-    "Wikipedia isn't installed" : {
-      "comment" : "Alert title when opening fails.",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Wikipedia isn't installed"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Wikipedia is niet geïnstalleerd"
           }
         }
       }

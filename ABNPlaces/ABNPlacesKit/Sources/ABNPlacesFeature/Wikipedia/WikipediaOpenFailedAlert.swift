@@ -2,10 +2,10 @@ import SwiftUI
 
 extension View {
     /// A system alert: VoiceOver reads the title and message, and "OK" is the cancel button, so Esc closes it too.
-    func wikipediaNotInstalledAlert(_ opener: WikipediaOpener) -> some View {
+    func wikipediaOpenFailedAlert(_ opener: WikipediaOpener) -> some View {
         alert(
-            Text("Wikipedia isn't installed", bundle: #bundle, comment: "Alert title when opening fails."),
-            isPresented: Bindable(opener).showsNotInstalledAlert
+            Text("Couldn't open Wikipedia", bundle: #bundle, comment: "Alert title when opening Wikipedia fails."),
+            isPresented: Bindable(opener).showsOpenFailedAlert
         ) {
             Button(role: .cancel) {
             } label: {
@@ -13,9 +13,9 @@ extension View {
             }
         } message: {
             Text(
-                "Install the Wikipedia app to see this place on the map.",
+                "Check that the Wikipedia app is installed, and allow this app to open it.",
                 bundle: #bundle,
-                comment: "Alert message when the Wikipedia app isn't installed."
+                comment: "Alert message when Wikipedia didn't open: not installed, or iOS's prompt was cancelled."
             )
         }
     }
@@ -24,26 +24,26 @@ extension View {
 // MARK: - Previews
 
 /// The alert, shown as soon as the preview appears.
-private struct NotInstalledAlertPreview: View {
+private struct OpenFailedAlertPreview: View {
     @State private var opener = WikipediaOpener()
 
     var body: some View {
         Color.clear
-            .wikipediaNotInstalledAlert(opener)
-            .onAppear { opener.showsNotInstalledAlert = true }
+            .wikipediaOpenFailedAlert(opener)
+            .onAppear { opener.showsOpenFailedAlert = true }
     }
 }
 
 #Preview("Light") {
-    NotInstalledAlertPreview()
+    OpenFailedAlertPreview()
 }
 
 #Preview("Dark") {
-    NotInstalledAlertPreview()
+    OpenFailedAlertPreview()
         .preferredColorScheme(.dark)
 }
 
 #Preview("Dutch") {
-    NotInstalledAlertPreview()
+    OpenFailedAlertPreview()
         .environment(\.locale, Locale(identifier: "nl_NL"))
 }

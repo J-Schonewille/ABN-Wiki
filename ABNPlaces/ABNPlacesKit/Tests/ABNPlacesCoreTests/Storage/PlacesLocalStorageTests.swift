@@ -1,5 +1,7 @@
-import ABNPlacesCore
+import Dependencies
 import Testing
+
+@testable import ABNPlacesCore
 
 @Suite("Places local storage", .timeLimit(.minutes(1)))
 struct PlacesLocalStorageTests {
@@ -56,5 +58,24 @@ struct PlacesLocalStorageTests {
         #expect(storage.save(.amsterdam))
 
         #expect(await updates.next() == [.mumbai, .amsterdam])
+    }
+
+    // The live storage lasts as long as the app, so a window that closes must not leave its listener behind.
+    @Test("A window that stops listening is let go")
+    func stoppedListenerIsRemoved() async {
+        let state = LockIsolated(PlacesLocalStorage.InMemoryState(places: []))
+        let storage = PlacesLocalStorage.inMemory(state: state)
+        let listening = Task {
+            for await _ in storage.updates() {}
+        }
+        while state.value.listeners.isEmpty, !Task.isCancelled {
+            await Task.yield()
+        }
+        #expect(state.value.listeners.count == 1)
+
+        listening.cancel()
+        await listening.value
+
+        #expect(state.value.listeners.isEmpty)
     }
 }
