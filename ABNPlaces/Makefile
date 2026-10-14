@@ -11,17 +11,20 @@
 #   make format            swift-format rewrites the Swift sources in place (.swift-format)
 #   make build             the ABNPlaces app
 #
-# Another simulator:    make test DESTINATION='platform=iOS Simulator,name=iPhone 17 Pro,OS=26.5'
+# Another simulator:    make test DESTINATION='platform=iOS Simulator,name=iPhone 17 Pro'
 # A DerivedData folder: make check DERIVED_DATA=/tmp/abnplaces-dd
 #
-# Snapshots are recorded on iPhone 17 with iOS 26.5 and only match there, so test-snapshots and check need that
-# simulator. make test runs on any simulator.
+# Snapshots are recorded on iPhone 17 with iOS 26.5 and only match there, so test-snapshots, snapshots-record and
+# check need that simulator. The other targets run on any iPhone 17, such as a stock Xcode's iOS 27 one.
 
-DESTINATION ?= platform=iOS Simulator,name=iPhone 17,OS=26.5
+DESTINATION ?= platform=iOS Simulator,name=iPhone 17
+SNAPSHOT_DESTINATION ?= platform=iOS Simulator,name=iPhone 17,OS=26.5
 DERIVED_DATA ?=
 
-XCODEBUILD = xcodebuild -project ABNPlaces.xcodeproj -scheme ABNPlaces -destination '$(DESTINATION)' \
+XCODEBUILD_ANY = xcodebuild -project ABNPlaces.xcodeproj -scheme ABNPlaces \
 	-skipMacroValidation -disableAutomaticPackageResolution $(if $(DERIVED_DATA),-derivedDataPath '$(DERIVED_DATA)')
+XCODEBUILD = $(XCODEBUILD_ANY) -destination '$(DESTINATION)'
+XCODEBUILD_SNAPSHOTS = $(XCODEBUILD_ANY) -destination '$(SNAPSHOT_DESTINATION)'
 
 SWIFT_SOURCES = ABNPlaces SnapshotTests UITests ABNPlacesKit/Sources ABNPlacesKit/Tests ABNPlacesKit/Package.swift
 
@@ -45,15 +48,15 @@ test:
 	$(XCODEBUILD) -collect-test-diagnostics never -testPlan Unit test
 
 test-snapshots:
-	TEST_RUNNER_SNAPSHOT_TESTING_RECORD=never $(XCODEBUILD) -collect-test-diagnostics never -testPlan Snapshots test
+	TEST_RUNNER_SNAPSHOT_TESTING_RECORD=never $(XCODEBUILD_SNAPSHOTS) -collect-test-diagnostics never -testPlan Snapshots test
 
 # Every snapshot reports "Record mode is on" as a failure, so the run always ends in TEST FAILED.
 snapshots-record:
-	-TEST_RUNNER_SNAPSHOT_TESTING_RECORD=all $(XCODEBUILD) -collect-test-diagnostics never -testPlan Snapshots test
+	-TEST_RUNNER_SNAPSHOT_TESTING_RECORD=all $(XCODEBUILD_SNAPSHOTS) -collect-test-diagnostics never -testPlan Snapshots test
 	@echo "If the tests ran, the snapshots were recorded again. Review them (git status, git diff), then run make check."
 
 # Runs on any simulator. For the iPad audits:
-# make test-ui DESTINATION='platform=iOS Simulator,name=iPad Pro 13-inch (M5),OS=26.5'
+# make test-ui DESTINATION='platform=iOS Simulator,name=iPad Pro 13-inch (M5)'
 test-ui:
 	$(XCODEBUILD) -collect-test-diagnostics never -testPlan UI test
 
