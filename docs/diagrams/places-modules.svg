@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 810 606" width="810" height="606" role="img" aria-labelledby="title desc">
+  <title id="title">ABNPlaces module graph</title>
+  <desc id="desc">The app depends on ABNPlacesFeature. ABNPlacesFeature depends on ABNDesignSystem, ABNPlacesCore and ABNPlacesUITestContract. ABNPlacesCore depends on ABNNetworking and ABNLogging; ABNNetworking depends on ABNLogging. The app, ABNPlacesFeature and ABNDesignSystem are MainActor by default; the other four modules are nonisolated. ABNPlacesFeature and ABNPlacesCore use swift-dependencies.</desc>
+  <style>
+    .node { fill: #ffffff; stroke: #d0d7de; stroke-width: 1.5; }
+    .ext { fill: none; stroke: #8c959f; stroke-width: 1.5; stroke-dasharray: 5 4; }
+    .name { font: 600 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; fill: #1f2328; }
+    .note { font: 12px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; fill: #59636e; }
+    .band-main { fill: #ddf4ff; stroke: #54aeff; stroke-width: 1; }
+    .band-off { fill: #dafbe1; stroke: #4ac26b; stroke-width: 1; }
+    .label-main { font: 600 13px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; fill: #0969da; }
+    .label-off { font: 600 13px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; fill: #1a7f37; }
+    .edge { fill: none; stroke: #59636e; stroke-width: 1.5; }
+    .edge-ext { fill: none; stroke: #8c959f; stroke-width: 1.5; stroke-dasharray: 5 4; }
+    .head { fill: #59636e; }
+    .head-ext { fill: #8c959f; }
+    @media (prefers-color-scheme: dark) {
+      .node { fill: #161b22; stroke: #3d444d; }
+      .ext { stroke: #656c76; }
+      .name { fill: #f0f6fc; }
+      .note { fill: #9198a1; }
+      .band-main { fill: #388bfd1a; stroke: #1f6feb; }
+      .band-off { fill: #2ea0431a; stroke: #238636; }
+      .label-main { fill: #4493f8; }
+      .label-off { fill: #3fb950; }
+      .edge { stroke: #9198a1; }
+      .edge-ext { stroke: #656c76; }
+      .head { fill: #9198a1; }
+      .head-ext { fill: #656c76; }
+    }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="head" d="M 0 0 L 10 5 L 0 10 z"/>
+    </marker>
+    <marker id="arrow-ext" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path class="head-ext" d="M 0 0 L 10 5 L 0 10 z"/>
+    </marker>
+  </defs>
+
+  <!-- Isolation bands -->
+  <rect class="band-main" x="20" y="20" width="530" height="204" rx="12"/>
+  <text class="label-main" x="36" y="44">MainActor by default</text>
+  <rect class="band-off" x="20" y="244" width="530" height="342" rx="12"/>
+  <text class="label-off" x="36" y="268">nonisolated</text>
+
+  <!-- Edges (drawn first, under the nodes) -->
+  <path class="edge" d="M 415 112 L 415 146" marker-end="url(#arrow)"/>
+  <path class="edge" d="M 300 176 L 252 176" marker-end="url(#arrow)"/>
+  <path class="edge" d="M 415 204 L 415 282" marker-end="url(#arrow)"/>
+  <path class="edge" d="M 360 204 C 360 248, 145 240, 145 282" marker-end="url(#arrow)"/>
+  <path class="edge" d="M 415 340 L 415 390" marker-end="url(#arrow)"/>
+  <path class="edge" d="M 415 448 L 415 498" marker-end="url(#arrow)"/>
+  <path class="edge" d="M 330 340 C 262 380, 262 520, 298 528" marker-end="url(#arrow)"/>
+  <path class="edge-ext" d="M 530 176 C 590 176, 680 190, 680 224" marker-end="url(#arrow-ext)"/>
+  <path class="edge-ext" d="M 530 312 C 590 312, 680 300, 680 284" marker-end="url(#arrow-ext)"/>
+
+  <!-- MainActor by default -->
+  <rect class="node" x="300" y="56" width="230" height="56" rx="8"/>
+  <text class="name" x="415" y="80" text-anchor="middle">ABNPlaces</text>
+  <text class="note" x="415" y="99" text-anchor="middle">the app</text>
+
+  <rect class="node" x="300" y="148" width="230" height="56" rx="8"/>
+  <text class="name" x="415" y="172" text-anchor="middle">ABNPlacesFeature</text>
+  <text class="note" x="415" y="191" text-anchor="middle">screens and their models</text>
+
+  <rect class="node" x="40" y="148" width="210" height="56" rx="8"/>
+  <text class="name" x="145" y="172" text-anchor="middle">ABNDesignSystem</text>
+  <text class="note" x="145" y="191" text-anchor="middle">tokens to organisms</text>
+
+  <!-- nonisolated -->
+  <rect class="node" x="300" y="284" width="230" height="56" rx="8"/>
+  <text class="name" x="415" y="308" text-anchor="middle">ABNPlacesCore</text>
+  <text class="note" x="415" y="327" text-anchor="middle">Place, PlacesAPI, WikipediaLink</text>
+
+  <rect class="node" x="40" y="284" width="210" height="56" rx="8"/>
+  <text class="name" x="145" y="308" text-anchor="middle">ABNPlacesUITestContract</text>
+  <text class="note" x="145" y="327" text-anchor="middle">IDs, shared with the UI tests</text>
+
+  <rect class="node" x="300" y="392" width="230" height="56" rx="8"/>
+  <text class="name" x="415" y="416" text-anchor="middle">ABNNetworking</text>
+  <text class="note" x="415" y="435" text-anchor="middle">HTTPClient, @concurrent decode</text>
+
+  <rect class="node" x="300" y="500" width="230" height="56" rx="8"/>
+  <text class="name" x="415" y="524" text-anchor="middle">ABNLogging</text>
+  <text class="note" x="415" y="543" text-anchor="middle">DEBUG-only loggers</text>
+
+  <!-- Third party -->
+  <rect class="ext" x="580" y="226" width="200" height="56" rx="8"/>
+  <text class="name" x="680" y="250" text-anchor="middle">swift-dependencies</text>
+  <text class="note" x="680" y="269" text-anchor="middle">dependency injection</text>
+</svg>

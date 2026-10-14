@@ -15,28 +15,24 @@ The URL scheme is `wikipedia://`. The following URLs are currently handled:
 
 ## Places location
 
-`wikipedia://places?lat=<latitude>&lon=<longitude>[&name=<label>]` opens the Places tab on the map, puts a pin on the location, centres the map on it with a span of about 10 km, and lists the top articles around it.
+`wikipedia://places?lat=<latitude>&lon=<longitude>[&name=<name>]` opens Places on the map, centred on the location with a span of about 10 km, and puts a pin on it.
 
 | Parameter       | Rule |
 | --------------- | ---- |
-| `lat`           | Required. Decimal degrees matching `-?[0-9]{1,3}(\.[0-9]{1,15})?`: an optional minus, a `.` as the decimal separator and at most 15 fraction digits. No exponent, hex, `+`, whitespace, `nan` or `inf`. From -90 to 90, inclusive. |
-| `lon`           | Required. Same format, from -180 to 180, inclusive. |
-| `name`          | Optional label, percent-encoded UTF-8. A `+` is a literal plus, not a space. Control and format characters, such as bidi overrides and zero-width characters, are removed; the rest is NFC-normalised, trimmed and cut to 100 grapheme clusters. It is the pin's title, shown under the pin when there is room, and what VoiceOver reads for it. Without a name, the pin has no title and VoiceOver reads MapKit's "Map pin". |
-| `WMFArticleURL` | When present, Places shows that article as before and ignores `lat`, `lon` and `name`. |
+| `lat`           | Required. Decimal degrees matching `-?[0-9]{1,3}(\.[0-9]{1,15})?`, from -90 to 90. A `.` as the decimal separator; no exponent or `+`. |
+| `lon`           | Required. Same format, from -180 to 180. |
+| `name`          | Optional pin title, percent-encoded UTF-8; a `+` stays a plus. Control and format characters are removed, and the rest is NFC-normalised, trimmed and cut to 100 characters. |
+| `WMFArticleURL` | A full `https` article URL. When present, the location is ignored: Places shows the article if it's on the device, and otherwise opens as usual. |
 
-- Keys are lowercase and case-sensitive. For a repeated key, the first value is used. An empty value counts as missing. Other parameters are ignored.
-- `wikipedia-official://` works too, and so does a trailing slash (`places/`).
-- When the location is missing or invalid, Places opens as it does without parameters.
-- The pin stays while the user pans, zooms, reloads the articles with "Results in this area" or switches to the list and back. A link to another location replaces it. Searching Places for something else, or a link that opens an article, removes it; a link without a valid location leaves it.
-- MapKit's map stops at 85° north and south, so the map is centred at most 84.5° from the equator, where the usual span still fits. A latitude beyond that, up to a pole, is still valid: the map then centres at ±84.5°, and the pin, which keeps the real latitude, lies north or south of the view. MapKit doesn't draw a pin beyond ±85° at all, so a link to a pole shows no pin.
-- After such a link, the user's own location doesn't move the map when the first GPS fix arrives. The "recenter on my location" button still does.
-- With VoiceOver running, the link doesn't switch Places from the list to the map. Places starts in the list under VoiceOver, and the list shows the same articles; the pin is on the map when the user switches to it.
-- Senders should build the URL with `URLComponents` and `URLQueryItem`, and write numbers in fixed notation with the POSIX locale and at most 15 fraction digits, for example with `degrees.formatted(.number.locale(Locale(identifier: "en_US_POSIX")).precision(.fractionLength(0...7)))`. That writes `52.3547498` and `0.0000001`; 7 fraction digits are about 1 cm. Don't use `String(describing:)`, which writes `1e-07` and `0.30000000000000004`, or a user-locale `NumberFormatter`, which writes `52,35` in Dutch: the grammar rejects all three.
-- Don't send `source`. The app reserves it for attributing app opens, and a link that carries it is no longer treated as an external link.
+- Keys are lowercase. The first of a repeated key wins, an empty value counts as missing, and other keys are ignored.
+- `wikipedia-official://` and `places/` work too.
+- A missing or invalid location opens Places as usual.
+- Places only loads the articles around the location when it has no results yet, or when the location is far from them. A link that arrives while a search is running loads no new articles.
+- The pin stays until a link to another location replaces it, or a new search removes it: one the user starts (text, a search result, "Your location") or a Places link that shows an article. "All top articles" and "All saved articles" keep it.
+- The map centres at most 84.5° north or south. MapKit draws no pin beyond 85°.
+- After a link, the first GPS fix doesn't move the map. With VoiceOver on, Places stays in the list.
+- Don't send `source`: the app uses it to attribute app opens.
 
-Examples:
+Senders: build the URL with `URLComponents`, and write the numbers with the POSIX locale, such as `degrees.formatted(.number.locale(Locale(identifier: "en_US_POSIX")).precision(.fractionLength(0...7)))`. `String(describing:)` (`1e-07`) and a user-locale formatter (`52,35`) don't match the grammar.
 
-- `wikipedia://places?lat=52.3547498&lon=4.8339215&name=Amsterdam`
-- `wikipedia://places?lat=40.4380638&lon=-3.7495758`
-
-To try one on a booted simulator: `xcrun simctl openurl booted "wikipedia://places?lat=19.0823998&lon=72.8111468&name=Mumbai"`
+To try it: `xcrun simctl openurl booted "wikipedia://places?lat=52.3547498&lon=4.8339215&name=Amsterdam"`
