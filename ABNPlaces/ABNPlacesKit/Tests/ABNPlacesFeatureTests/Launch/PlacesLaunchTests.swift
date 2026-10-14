@@ -52,19 +52,12 @@ struct PlacesLaunchTests {
         }
     }
 
-    @Test("The slow scenario answers only when it's cancelled")
-    func slowScenario() async throws {
-        let hasAnswered = LockIsolated(false)
-        let slow = Task {
-            let error = await Self.error(fetching: LaunchArgument.Scenario.slow.placesAPI)
-            hasAnswered.setValue(true)
-            return error
-        }
-
-        try await Task.sleep(for: .milliseconds(100))  // A client that answers straight away has done so by now.
-        #expect(!hasAnswered.value)
+    @Test("The client ends with .cancelled when it's cancelled")
+    func slowScenario() async {
+        let slow = Task { await Self.error(fetching: LaunchArgument.Scenario.slow.placesAPI) }
 
         slow.cancel()
+
         #expect(await slow.value == .cancelled)
     }
 

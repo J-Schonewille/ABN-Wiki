@@ -2,13 +2,9 @@
 public enum AccessibilityID {
     public enum PlacesList {
         public static let refresh = "placesList.refresh"
-        /// The first load's placeholders.
-        public static let loading = "placesList.loading"
         /// The first load's error and its Retry button.
         public static let loadFailure = "placesList.loadFailure"
         public static let retry = "placesList.retry"
-        /// Retry on the banner of a failed refresh.
-        public static let refreshRetry = "placesList.refreshRetry"
         public static let addPlace = "placesList.addPlace"
 
         /// A place's card, by `Place.id`.

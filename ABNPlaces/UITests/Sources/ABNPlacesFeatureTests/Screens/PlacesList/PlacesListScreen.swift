@@ -25,6 +25,10 @@ struct PlacesListScreen {
         app.buttons[AccessibilityID.PlacesList.addPlace]
     }
 
+    var refreshButton: XCUIElement {
+        app.buttons[AccessibilityID.PlacesList.refresh]
+    }
+
     // MARK: Waits
 
     func waitForCards(of places: [Place], file: StaticString = #filePath, line: UInt = #line) {

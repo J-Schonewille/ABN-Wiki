@@ -14,6 +14,8 @@ struct CreatePlaceView: View {
     @AccessibilityFocusState private var voiceOverField: CreatePlaceModel.Field?
 
     var body: some View {
+        // The tap below only hides the keyboard, so it isn't a button.
+        // swiftlint:disable:next accessibility_trait_for_button
         ScrollView {
             VStack(alignment: .leading, spacing: DSSpacing.large) {
                 nameField

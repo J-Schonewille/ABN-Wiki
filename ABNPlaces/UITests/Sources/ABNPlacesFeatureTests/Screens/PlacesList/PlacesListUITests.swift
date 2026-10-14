@@ -43,6 +43,18 @@ final class PlacesListUITests: PlacesUITestCase {
         list.waitForCards(of: [.amsterdam])
     }
 
+    /// For people who can't pull.
+    @MainActor
+    func testTheRefreshButtonShowsTheNewPlaces() {
+        let list = launch(.updates)
+        list.waitForCards(of: .preview)
+
+        list.refreshButton.tap()
+
+        list.waitForNoCard(of: .mumbai)
+        list.waitForCards(of: [.amsterdam])
+    }
+
     @MainActor
     func testPullingToRefreshAfterAFailedLoadShowsThePlaces() {
         let list = launch(.recovers)

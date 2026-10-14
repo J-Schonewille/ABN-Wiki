@@ -73,10 +73,9 @@ struct CreatePlaceScreen {
         field.typeText(text)
     }
 
-    /// Taps beside the end of the Longitude helper text. A field also takes taps just outside its border, and on
-    /// iPhone the keyboard covers the space below Save.
+    /// Beside the Latitude helper text: over 30 pt from every control, also on ipad
     func tapOutsideTheFields() {
-        longitudeField.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 1.75)).tap()
+        latitudeField.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 1.75)).tap()
     }
 
     func save() {

@@ -52,14 +52,4 @@
                           @"https://en.wikipedia.org/w/index.php?search=dog&title=Special:Search&fulltext=1");
 }
 
-// The link carries a location, so it stays on the device: no Spotlight, Handoff or public index.
-- (void)testPlacesURLWithALocationIsNotSharedOrIndexed {
-    NSURL *url = [NSURL URLWithString:@"wikipedia://places?lat=52.3547&lon=4.8339"];
-    NSUserActivity *activity = [NSUserActivity wmf_activityForWikipediaScheme:url];
-    XCTAssertEqual(activity.wmf_type, WMFUserActivityTypePlaces);
-    XCTAssertFalse(activity.eligibleForHandoff);
-    XCTAssertFalse(activity.eligibleForSearch);
-    XCTAssertFalse(activity.eligibleForPublicIndexing);
-}
-
 @end

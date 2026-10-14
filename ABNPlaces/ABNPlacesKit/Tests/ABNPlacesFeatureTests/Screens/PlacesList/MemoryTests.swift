@@ -45,7 +45,7 @@ struct MemoryTests {
 
             let outcome = await model.open(.amsterdam)
 
-            #expect(outcome == (wikipediaInstalled ? .opened : .notInstalled))
+            #expect(outcome == (wikipediaInstalled ? .opened : .openFailed))
         }
         #expect(weakModel == nil)
         #expect(weakOpener == nil)
@@ -54,12 +54,20 @@ struct MemoryTests {
     @Test("After the screen stops following the saved places")
     func afterFollowingCreatedPlaces() async {
         weak var weakModel: PlacesListModel?
+        let listeners = LockIsolated(0)
+        let storage = PlacesLocalStorage.inMemory(listeners: listeners)
         let following: Task<Void, Never>
         do {
-            let model = PlacesListModel()
+            let model = withDependencies {
+                $0.placesLocalStorage = storage
+            } operation: {
+                PlacesListModel()
+            }
             weakModel = model
             following = Task { await model.followCreatedPlaces() }
         }
+        await waitUntil { listeners.value == 1 }  // The model listens now.
+
         following.cancel()  // What SwiftUI does to `.task` when the screen goes away.
         await following.value
 

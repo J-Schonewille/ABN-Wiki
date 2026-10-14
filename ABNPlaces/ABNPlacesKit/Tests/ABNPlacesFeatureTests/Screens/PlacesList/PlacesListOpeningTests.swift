@@ -25,18 +25,18 @@ struct PlacesListOpeningTests {
 
         #expect(outcome == .opened)
         #expect(opened.value == [try #require(URL(string: link))])
-        #expect(!model.opener.showsNotInstalledAlert)
+        #expect(!model.opener.showsOpenFailedAlert)
     }
 
     @Test("When Wikipedia isn't installed, the alert shows and nothing else opens")
-    func notInstalledShowsTheAlert() async throws {
+    func openFailureShowsTheAlert() async throws {
         let opened = LockIsolated<[URL]>([])
         let model = Self.model(openURL: .recording(into: opened) { false })
 
         let outcome = await model.open(.amsterdam)
 
-        #expect(outcome == .notInstalled)
-        #expect(model.opener.showsNotInstalledAlert)
+        #expect(outcome == .openFailed)
+        #expect(model.opener.showsOpenFailedAlert)
         #expect(opened.value == [try #require(URL(string: Self.amsterdamLink))])
     }
 
@@ -68,7 +68,7 @@ struct PlacesListOpeningTests {
         gate.open(with: true)  // An open the cancel missed would now succeed, not hang.
 
         #expect(await tap.value == .cancelled)
-        #expect(!model.opener.showsNotInstalledAlert)
+        #expect(!model.opener.showsOpenFailedAlert)
     }
 
     @Test("Once an open has finished, the next tap opens again")

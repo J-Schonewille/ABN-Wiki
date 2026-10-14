@@ -23,7 +23,8 @@ struct PlacesListCreatedPlacesTests {
 
     @Test("A place saved in another window shows here too")
     func placeSavedInAnotherWindow() async {
-        let storage = PlacesLocalStorage.inMemory()
+        let listeners = LockIsolated(0)
+        let storage = PlacesLocalStorage.inMemory(listeners: listeners)
         let model = Self.model(.scripted(), storage: storage)
         let otherWindowsSheet = withDependencies {
             $0.placesLocalStorage = storage
@@ -32,6 +33,7 @@ struct PlacesListCreatedPlacesTests {
         }
         let following = Task { await model.followCreatedPlaces() }
         defer { following.cancel() }
+        await waitUntil { listeners.value == 1 }
 
         otherWindowsSheet.latitude = "19,0760"
         otherWindowsSheet.longitude = "72,8777"

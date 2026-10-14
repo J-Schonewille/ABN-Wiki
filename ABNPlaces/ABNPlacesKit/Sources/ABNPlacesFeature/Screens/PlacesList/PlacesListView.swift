@@ -58,7 +58,7 @@ struct PlacesListView: View {
         .task {
             await model.followCreatedPlaces()
         }
-        .wikipediaNotInstalledAlert(model.opener)
+        .wikipediaOpenFailedAlert(model.opener)
         .onChange(of: model.failureCount) {
             announceFailure()
         }
@@ -120,7 +120,6 @@ struct PlacesListView: View {
         .accessibilityLabel(
             Text("Loading places", bundle: #bundle, comment: "VoiceOver label of the placeholders while places load.")
         )
-        .accessibilityIdentifier(AccessibilityID.PlacesList.loading)
     }
 
     private func refreshBanner(for failure: LoadFailure) -> some View {
@@ -131,7 +130,6 @@ struct PlacesListView: View {
                 Text("Retry", bundle: #bundle, comment: "Button that tries to load the places again.")
             }
             .disabled(model.isLoading)
-            .accessibilityIdentifier(AccessibilityID.PlacesList.refreshRetry)
         }
     }
 
