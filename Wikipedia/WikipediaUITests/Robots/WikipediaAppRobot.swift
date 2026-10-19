@@ -14,9 +14,8 @@ struct WikipediaAppRobot: ScreenshotCapturingRobot {
 // MARK: - Navigation
 
 extension WikipediaAppRobot {
-    /// The app launches on Places, so this selects the Home tab first.
     var home: HomeRobot {
-        HomeRobot(base: base, configuration: configuration).selectAfterLaunch()
+        HomeRobot(base: base, configuration: configuration)
     }
 
     var onboarding: OnboardingRobot {
@@ -59,7 +58,8 @@ extension XCTestCase {
         resetsPreferredLanguages: Bool = true,
         suppressesActivityTabOnboarding: Bool = true,
         suppressesGamesAnnouncement: Bool = true,
-        suppressesHomeOnboarding: Bool = true
+        suppressesHomeOnboarding: Bool = true,
+        launchesOnPlaces: Bool = false
     ) -> WikipediaAppRobot {
         let app = XCUIApplication()
         let configuration = UITestConfiguration(
@@ -67,7 +67,8 @@ extension XCTestCase {
             resetsPreferredLanguages: resetsPreferredLanguages,
             suppressesActivityTabOnboarding: suppressesActivityTabOnboarding,
             suppressesGamesAnnouncement: suppressesGamesAnnouncement,
-            suppressesHomeOnboarding: suppressesHomeOnboarding
+            suppressesHomeOnboarding: suppressesHomeOnboarding,
+            launchesOnPlaces: launchesOnPlaces
         )
         app.configureForUITestLaunch(configuration: configuration)
         app.launch()

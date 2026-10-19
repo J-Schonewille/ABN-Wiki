@@ -2,7 +2,7 @@
 
 This repo contains 2 apps:
 
-1. **Wikipedia** (`Wikipedia/`): the Wikipedia iOS app, changed so every launch opens the Places tab, and so another app can open Places centred on a location.
+1. **Wikipedia** (`Wikipedia/`): the Wikipedia iOS app, changed so another app can open Places centred on a location, and with a feature flag that opens Places at every launch.
 2. **ABNPlaces** (`ABNPlaces/`): a SwiftUI app that lists places, each with a photo from Wikipedia, and opens them in Wikipedia, plus places you add yourself.
 
 <p align="center">
@@ -44,11 +44,11 @@ All the rules: [Wikipedia/docs/url_schemes.md](Wikipedia/docs/url_schemes.md).
 
 `Wikipedia/` is [wikimedia/wikipedia-ios](https://github.com/wikimedia/wikipedia-ios) as of 8 October 2026 (upstream's tag `alphas/1893`, commit `d2b887f`), imported with `git subtree --squash`. Our changes:
 
-- Every launch opens the Places tab, also with "Open app on Search tab" on; a link, shortcut or notification can then pick another tab. The last article isn't reopened on top of it.
+- The "Launch on Places" flag (Developer Settings: tap the title of Settings → About 7 times; off by default; `WMFDeveloperSettingsDataController.launchOnPlaces`) opens the Places tab at every launch, also with "Open app on Search tab" on; a link, shortcut or notification can then pick another tab. The last article isn't reopened on top of it. With the flag off, the app starts on Home as upstream does.
 - `wikipedia://places?lat=&lon=&name=` centres the map on that point and puts a pin on it (`PlacesLocationRequest` in the WMF framework, `PlacesViewController.showLocation`).
 - The build only lints. Upstream's build phases ran `swiftlint --fix`, which rewrites files during a build.
 - `Configurations/OpenSourceDebug.xcconfig` is committed, so Wikipedia builds without a setup script.
-- The UI tests' robot opens the Home tab itself, and `testLaunchOpensPlaces` checks the launch tab.
+- `testLaunchOpensHome` and `testLaunchOnPlacesFlagOpensPlaces` check the launch tab; UI tests set the flag with the `-WMFLaunchOnPlacesForTesting` launch argument.
 
 ## ABNPlaces architecture
 

@@ -321,6 +321,19 @@ public extension WMFDeveloperSettingsDataControlling {
         }
     }
 
+    // MARK: - Places
+
+    /// Gates opening the app on the Places tab at every launch, instead of Home. Off by default.
+    public var launchOnPlaces: Bool {
+        get { Self.launchOnPlaces }
+        set { saveFlag(.developerSettingsLaunchOnPlaces, newValue) }
+    }
+
+    /// Static so app launch can read the flag without initializing `shared`.
+    public static var launchOnPlaces: Bool {
+        (try? WMFDataEnvironment.current.userDefaultsStore?.load(key: WMFUserDefaultsKey.developerSettingsLaunchOnPlaces.rawValue)) ?? false
+    }
+
     // MARK: - Local Notifications
 
     /// Gates the daily top read local notification prototype. Off by default.

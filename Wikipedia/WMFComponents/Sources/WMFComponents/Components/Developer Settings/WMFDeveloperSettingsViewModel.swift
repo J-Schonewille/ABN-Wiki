@@ -183,10 +183,12 @@ struct WMFDeveloperSettingsExportFile: Identifiable {
         let forceHcaptchaChallenge = WMFFormItemSelectViewModel(title: "Force hCaptcha Challenge", isSelected: WMFDeveloperSettingsDataController.shared.forceHCaptchaChallenge)
         let allowGestureZoomArticleWebview = WMFFormItemSelectViewModel(title: "Allow pinch to zoom when reading articles", isSelected: WMFDeveloperSettingsDataController.shared.allowGestureZoomArticleWebview)
         let enableHomePhase2 = WMFFormItemSelectViewModel(title: "Enable Home Phase 2", isSelected: WMFDeveloperSettingsDataController.shared.enableHomePhase2)
+        let launchOnPlaces = WMFFormItemSelectViewModel(title: "Launch on Places", isSelected: WMFDeveloperSettingsDataController.shared.launchOnPlaces)
 
         formViewModel = WMFFormViewModel(sections: [
             WMFFormSectionSelectViewModel(items: [
                 enableHomePhase2,
+                launchOnPlaces,
                 doNotPostImageRecommendationsEditItem,
                 sendAnalyticsToWMFLabsItem,
                 forceEmailAuth,
@@ -222,6 +224,10 @@ struct WMFDeveloperSettingsExportFile: Identifiable {
 
         enableHomePhase2.$isSelected
             .sink { isSelected in WMFDeveloperSettingsDataController.shared.enableHomePhase2 = isSelected }
+            .store(in: &subscribers)
+
+        launchOnPlaces.$isSelected
+            .sink { isSelected in WMFDeveloperSettingsDataController.shared.launchOnPlaces = isSelected }
             .store(in: &subscribers)
     }
 

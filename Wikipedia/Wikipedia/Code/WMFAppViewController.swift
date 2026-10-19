@@ -20,6 +20,7 @@ import WMFNativeLocalizations
 
 // MARK: - Constants
 
+private let wmfTimeBeforeShowingHomeScreenOnLaunch: TimeInterval = 24 * 60 * 60
 private let wmfRemoteAppConfigCheckInterval: CFTimeInterval = 3 * 60 * 60
 private let wmfTempAccountConfigCheckInterval: CFTimeInterval = 3 * 60 * 60
 private let wmfLastRemoteAppConfigCheckAbsoluteTimeKey = "WMFLastRemoteAppConfigCheckAbsoluteTimeKey"
@@ -30,6 +31,7 @@ private let wmfLegacyDefaultTabTypeSettingsValue = 1 // the old `WMFAppDefaultTa
 private let wmfSuppressActivityTabOnboardingForTesting = "WMFSuppressActivityTabOnboardingForTesting"
 private let wmfSuppressGamesAnnouncementForTesting = "WMFSuppressGamesAnnouncementForTesting"
 private let wmfSuppressHomeOnboardingForTesting = "WMFSuppressHomeOnboardingForTesting"
+private let wmfLaunchOnPlacesForTesting = "WMFLaunchOnPlacesForTesting"
 
 // KVO context pointers
 private var kvoSavedArticlesFetcherProgress = UInt8(0)
@@ -403,10 +405,21 @@ final class WMFAppViewController: UITabBarController, AppTabBarDelegate {
 
         updateUserInterfaceStyleOfNavigationControllersForCurrentTheme()
 
-        // The app always opens on Places, also with "Open app on Search tab" on.
+        // With "Launch on Places" on, the app always opens on Places, also with "Open app on Search tab" on.
         // A link, shortcut or notification can then select another tab.
-        if selectedIndex != WMFAppTabType.places.rawValue {
-            selectedIndex = WMFAppTabType.places.rawValue
+        if WMFDeveloperSettingsDataController.launchOnPlaces {
+            if selectedIndex != WMFAppTabType.places.rawValue {
+                selectedIndex = WMFAppTabType.places.rawValue
+            }
+            return
+        }
+
+        let shouldOpenOnSearch = shouldOpenAppOnSearchTab()
+        if shouldOpenOnSearch && selectedIndex != WMFAppTabType.search.rawValue {
+            selectedIndex = WMFAppTabType.search.rawValue
+            searchTabViewController.makeSearchBarBecomeFirstResponder()
+        } else if selectedIndex != WMFAppTabType.main.rawValue {
+            selectedIndex = WMFAppTabType.main.rawValue
         }
     }
 
@@ -890,6 +903,11 @@ final class WMFAppViewController: UITabBarController, AppTabBarDelegate {
         if UserDefaults.standard.bool(forKey: wmfSuppressHomeOnboardingForTesting) {
             WMFHomeDataController.shared.setHasSeenOneTimeOnboarding(true)
         }
+
+        // Stored, so set it both ways: otherwise a test that turned it on would leave the next test on Places.
+        if UserDefaults.standard.object(forKey: wmfLaunchOnPlacesForTesting) != nil {
+            WMFDeveloperSettingsDataController.shared.launchOnPlaces = UserDefaults.standard.bool(forKey: wmfLaunchOnPlacesForTesting)
+        }
     }
 
     // MARK: - Start/Pause/Resume App
@@ -977,6 +995,10 @@ final class WMFAppViewController: UITabBarController, AppTabBarDelegate {
                     done()
                 }
                 _ = self.dataStore.authenticationManager.authStateIsTemporary
+            } else if self.shouldShowHomeOnLaunch() {
+                self.hideSplashView()
+                self.showHome()
+                done()
             } else {
                 self.hideSplashView()
                 done()
@@ -1398,6 +1420,14 @@ final class WMFAppViewController: UITabBarController, AppTabBarDelegate {
             }
         }
         return contentURL
+    }
+
+    private func shouldShowHomeOnLaunch() -> Bool {
+        // The 24-hour reset to Home would leave Places, which "Launch on Places" opens at every launch.
+        guard !WMFDeveloperSettingsDataController.launchOnPlaces else { return false }
+        guard !shouldOpenAppOnSearchTab() else { return false }
+        guard let resignActiveDate = UserDefaults.standard.wmf_appResignActiveDate() else { return false }
+        return abs(resignActiveDate.timeIntervalSinceNow) >= wmfTimeBeforeShowingHomeScreenOnLaunch
     }
 
     func visibleArticleViewController() -> ArticleViewController? {

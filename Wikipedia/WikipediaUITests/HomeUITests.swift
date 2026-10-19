@@ -1,8 +1,13 @@
 import XCTest
 
 final class HomeUITests: XCTestCase {
-    func testLaunchOpensPlaces() throws {
+    func testLaunchOpensHome() throws {
         launchWikipediaAppRobot(onboardingState: .completed)
+            .assertRootTabSelected(.home)
+    }
+
+    func testLaunchOnPlacesFlagOpensPlaces() throws {
+        launchWikipediaAppRobot(onboardingState: .completed, launchesOnPlaces: true)
             .assertRootTabSelected(.places)
     }
 
