@@ -35,7 +35,7 @@ private struct PlacesGridPreview: View {
         ScrollView {
             PlacesGrid {
                 ForEach([Place].preview) { place in
-                    PlaceCard(place: place) {}
+                    PlaceCard(place: place, imageURL: place.name == nil ? nil : .placeStubImage) {}
                 }
             }
             .padding(DSSpacing.medium)

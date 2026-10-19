@@ -1,10 +1,12 @@
 import SwiftUI
 
-/// A card with an icon tile, a title, an optional subtitle and a trailing symbol:
-/// - VoiceOver reads it as one element, "title, subtitle". The tile and the trailing symbol are hidden.
+/// A card with a thumbnail, a title, an optional subtitle and a trailing symbol:
+/// - The thumbnail is a map pin ``DSIconTile`` by default. Another one sizes itself, so it can grow with the text.
+/// - VoiceOver reads it as one element, "title, subtitle". The trailing symbol is hidden, and so is the default
+///   thumbnail; hide another thumbnail yourself.
 /// - To make it tappable, wrap it in a `Button` with ``DSCardButtonStyle``,
-public struct DSCard: View {
-    private let symbol: DSSymbol
+public struct DSCard<Thumbnail: View>: View {
+    private let thumbnail: Thumbnail
     private let title: Text
     private let subtitle: Text?
     private let trailingSymbol: DSSymbol
@@ -14,12 +16,12 @@ public struct DSCard: View {
     @ScaledMetric(relativeTo: .headline) private var spacing = DSSpacing.small
 
     public init(
-        symbol: DSSymbol,
+        thumbnail: Thumbnail = DSIconTile(symbol: .mapPin),
         title: Text,
         subtitle: Text? = nil,
         trailingSymbol: DSSymbol = .chevron
     ) {
-        self.symbol = symbol
+        self.thumbnail = thumbnail
         self.title = title
         self.subtitle = subtitle
         self.trailingSymbol = trailingSymbol
@@ -33,7 +35,7 @@ public struct DSCard: View {
             ? AnyLayout(HStackLayout(alignment: .center, spacing: spacing))
             : AnyLayout(VStackLayout(alignment: .leading, spacing: spacing))
         stack {
-            DSIconTile(symbol: symbol)
+            thumbnail
             VStack(alignment: .leading, spacing: DSSpacing.xxSmall) {
                 title
                     .font(.headline)
@@ -96,14 +98,12 @@ private struct CardPreview: View {
             Button {
             } label: {
                 DSCard(
-                    symbol: .mapPin,
                     title: Text(verbatim: "Amsterdam"),
                     subtitle: Text(verbatim: "52.3676° N, 4.9041° E")
                 )
             }
             .buttonStyle(.dsCard)
             DSCard(
-                symbol: .mapPin,
                 title: Text(verbatim: "Tierra del Fuego National Park, Ushuaia"),
                 subtitle: Text(verbatim: "54.8500° S, 68.5667° W")
             )

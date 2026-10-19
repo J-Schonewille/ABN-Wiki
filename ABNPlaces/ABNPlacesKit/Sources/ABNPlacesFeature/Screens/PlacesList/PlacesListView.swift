@@ -100,9 +100,11 @@ struct PlacesListView: View {
         if !model.places.isEmpty {
             PlacesGrid {
                 ForEach(model.places) { place in
-                    PlaceCard(place: place) {
+                    PlaceCard(place: place, imageURL: model.imageURLs[place.id]) {
                         Task { await model.open(place) }
                     }
+                    // Tie to load/refresh count so it refetches images while refreshing.
+                    .task(id: model.completedLoadCount) { await model.loadImage(for: place) }
                 }
             }
         }

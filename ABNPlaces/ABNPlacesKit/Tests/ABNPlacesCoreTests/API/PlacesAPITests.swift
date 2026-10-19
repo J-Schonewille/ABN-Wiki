@@ -76,21 +76,6 @@ struct PlacesAPITests {
         #expect(PlacesAPI.feedURL.absoluteString == expected)
     }
 
-    @Test("The live client uses a session without a cache, and the app's User-Agent")
-    func liveClientUsesSessionWithoutCacheAndTheAppsUserAgent() {
-        let httpClient = PlacesAPI.liveHTTPClient
-
-        #expect(httpClient.session.configuration.urlCache == nil)
-        #expect(httpClient.userAgent == PlacesAPI.userAgent)
-        #expect(PlacesAPI.userAgent.hasPrefix("ABNPlaces"))
-    }
-
-    @Test("The User-Agent is the app's name and version")
-    func userAgentIsTheAppsNameAndVersion() {
-        #expect(PlacesAPI.makeUserAgent(appVersion: "1.2") == "ABNPlaces/1.2")
-        #expect(PlacesAPI.makeUserAgent(appVersion: nil) == "ABNPlaces")
-    }
-
     /// `@DependencyClient` writes the unimplemented `fetch`. The test checks the exact message, so it fails if the
     /// call reports nothing, or something else.
     @Test("The test value reports an unimplemented fetch, then throws")

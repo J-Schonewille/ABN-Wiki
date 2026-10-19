@@ -45,6 +45,8 @@ let package = Package(
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "DependenciesMacros", package: "swift-dependencies"),
             ],
+            // The stub photo for ImagesAPI.preview.
+            resources: [.process("Resources")],
             swiftSettings: coreSettings
         ),
         .testTarget(

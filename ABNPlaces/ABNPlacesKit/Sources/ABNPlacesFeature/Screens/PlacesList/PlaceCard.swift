@@ -10,15 +10,30 @@ struct PlaceCard: View {
     static let trailingSymbol = DSSymbol.openInOtherApp
 
     let place: Place
+    private let image: ImageSource
     let action: () -> Void
 
     @Environment(\.locale) private var locale
+
+    /// Loads the place's image from `imageURL`. Nil shows the map pin tile.
+    init(place: Place, imageURL: URL?, action: @escaping () -> Void) {
+        self.place = place
+        self.image = .url(imageURL)
+        self.action = action
+    }
+
+    /// With the image already loaded, so snapshots don't wait for it.
+    init(place: Place, image: Image?, action: @escaping () -> Void) {
+        self.place = place
+        self.image = .loaded(image)
+        self.action = action
+    }
 
     var body: some View {
         let formatter = CoordinateFormatter(locale: locale)
         Button(action: action) {
             DSCard(
-                symbol: .mapPin,
+                thumbnail: thumbnail,
                 title: title,
                 subtitle: Text(formatter.text(for: place.coordinate)),
                 trailingSymbol: Self.trailingSymbol
@@ -47,18 +62,32 @@ struct PlaceCard: View {
             Text("Unnamed place", bundle: #bundle, comment: "Card title for a place without a name.")
         }
     }
+
+    @ViewBuilder private var thumbnail: some View {
+        switch image {
+        case .url(let url):
+            PlacesImageView(imageURL: url)
+        case .loaded(let image):
+            PlaceThumbnail(image: image)
+        }
+    }
+
+    private enum ImageSource {
+        case url(URL?)
+        case loaded(Image?)
+    }
 }
 
 // MARK: - Previews
 
 // DEBUG only: the previews use the fixtures, which Release builds don't have.
 #if DEBUG
-/// A named place, and one without a name.
+/// A named place with an image, and one without a name or an image.
 private struct PlaceCardPreview: View {
     var body: some View {
         VStack(spacing: DSSpacing.small) {
-            PlaceCard(place: .amsterdam) {}
-            PlaceCard(place: .unnamedMadrid) {}
+            PlaceCard(place: .amsterdam, imageURL: .placeStubImage) {}
+            PlaceCard(place: .unnamedMadrid, imageURL: nil) {}
         }
         .padding(DSSpacing.medium)
         .background(DSColor.background)

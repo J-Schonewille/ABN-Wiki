@@ -13,6 +13,8 @@ public enum PlacesLaunch {
         if let scenario = LaunchArgument.Scenario(launchArguments: arguments) {
             prepareDependencies {
                 $0.placesAPI = scenario.placesAPI
+                // The map pin tiles, as before the images: no network in UI tests.
+                $0.imagesAPI = .empty
             }
         }
         if animationsDisabled(by: arguments) {

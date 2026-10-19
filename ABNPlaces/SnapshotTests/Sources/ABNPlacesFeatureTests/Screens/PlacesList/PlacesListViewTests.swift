@@ -82,6 +82,7 @@ struct PlacesListViewTests {
         let coordinate = try #require(Coordinate(latitude: 52.358, longitude: 4.8686))
         let model = withDependencies {
             $0.placesAPI = .preview
+            $0.imagesAPI = .empty
             $0.placesLocalStorage = .inMemory([Place(name: "Vondelpark", coordinate: coordinate)])
         } operation: {
             PlacesListModel()
@@ -114,6 +115,7 @@ struct PlacesListViewTests {
     private static func model(fetchingFrom client: PlacesAPI) -> PlacesListModel {
         withDependencies {
             $0.placesAPI = client
+            $0.imagesAPI = .empty
         } operation: {
             PlacesListModel()
         }

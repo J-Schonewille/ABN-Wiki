@@ -17,7 +17,6 @@ public struct DSSkeletonCard: View {
 
     public var body: some View {
         DSCard(
-            symbol: .mapPin,
             title: Text(verbatim: placeholderTitle),
             subtitle: Text(verbatim: "00.0000° N, 0.0000° E"),
             trailingSymbol: trailingSymbol

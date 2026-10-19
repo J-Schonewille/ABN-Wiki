@@ -11,7 +11,6 @@ struct CardButton: View {
         Button {
         } label: {
             DSCard(
-                symbol: .mapPin,
                 title: Text(verbatim: title),
                 subtitle: Text(verbatim: coordinates).accessibilityLabel(Text(verbatim: spokenCoordinates))
             )

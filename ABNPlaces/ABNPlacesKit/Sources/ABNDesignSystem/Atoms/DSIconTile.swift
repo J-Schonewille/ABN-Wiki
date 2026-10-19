@@ -32,17 +32,28 @@ public struct DSIconTile: View {
     }
 }
 
+/// The `.tile` rounded square at any size. The corner grows with the side, so the shape stays the same.
+/// Clip an image to it to match ``DSIconTile``.
+nonisolated public struct DSTileShape: Shape {
+    /// The tile at the default text size.
+    static let baseSide = 44.0
+    static let baseCornerRadius = 12.0
+
+    public init() {}
+
+    public func path(in rect: CGRect) -> Path {
+        RoundedRectangle(cornerRadius: rect.width * Self.baseCornerRadius / Self.baseSide, style: .continuous)
+            .path(in: rect)
+    }
+}
+
 /// Separate from ``DSIconTile``, so its `@ScaledMetric`s see the capped text size.
 private struct DSIconTileContent: View {
     let symbol: DSSymbol
     let style: DSIconTile.Style
 
-    /// The tile at the default text size. The corner grows with the side, so the tile keeps its shape.
-    private static let baseTileSide = 44.0
-    private static let baseTileCornerRadius = 12.0
-
     @Environment(\.redactionReasons) private var redactionReasons
-    @ScaledMetric(relativeTo: .title3) private var tileSide = baseTileSide
+    @ScaledMetric(relativeTo: .title3) private var tileSide = DSTileShape.baseSide
     @ScaledMetric(relativeTo: .title) private var circleDiameter = 64.0
 
     var body: some View {
@@ -51,8 +62,8 @@ private struct DSIconTileContent: View {
         // The circle needs circular corners; smooth ones would flatten it.
         let shape =
             style == .tile
-            ? RoundedRectangle(cornerRadius: side * Self.baseTileCornerRadius / Self.baseTileSide, style: .continuous)
-            : RoundedRectangle(cornerRadius: side / 2, style: .circular)
+            ? AnyShape(DSTileShape())
+            : AnyShape(RoundedRectangle(cornerRadius: side / 2, style: .circular))
         Image(symbol)
             .font(style == .tile ? .title3.weight(.semibold) : .title.weight(.semibold))
             .foregroundStyle(DSColor.accent)

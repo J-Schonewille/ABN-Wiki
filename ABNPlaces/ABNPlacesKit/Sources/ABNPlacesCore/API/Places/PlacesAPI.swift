@@ -12,7 +12,7 @@ public struct PlacesAPI: Sendable {
 
 extension PlacesAPI: DependencyKey {
     /// Loads the assignment's `locations.json`, always from the server.
-    public static let liveValue = PlacesAPI.live(httpClient: liveHTTPClient, url: feedURL)
+    public static let liveValue = PlacesAPI.live(httpClient: .live, url: feedURL)
 
     /// `fetch` is unimplemented, so a test that uses this client without setting it fails.
     public static let testValue = PlacesAPI()
@@ -62,17 +62,6 @@ extension PlacesAPI {
         components.path = "/abnamrocoesd/assignment-ios/main/locations.json"
         return components.validURL
     }()
-
-    static let userAgent = makeUserAgent(
-        appVersion: Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
-    )
-
-    static func makeUserAgent(appVersion: String?) -> String {
-        appVersion.map { "ABNPlaces/\($0)" } ?? "ABNPlaces"
-    }
-
-    /// The live value's HTTP client: a session without a cache, and the app's User-Agent.
-    static let liveHTTPClient = HTTPClient(session: HTTPClient.makeEphemeralSession(), userAgent: userAgent)
 
     /// Maps every `NetworkError` to a `PlacesAPIError`.
     static func live(httpClient: HTTPClient, url: URL) -> PlacesAPI {

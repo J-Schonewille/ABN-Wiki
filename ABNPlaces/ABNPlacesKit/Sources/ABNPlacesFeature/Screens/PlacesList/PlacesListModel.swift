@@ -1,5 +1,6 @@
 import ABNPlacesCore
 import Dependencies
+import Foundation
 import Observation
 
 @Observable
@@ -18,10 +19,15 @@ final class PlacesListModel {
     private(set) var isLoading = false
     private(set) var failureCount = 0
     private(set) var updateCount = 0
+    /// The cards' images found so far. A place without an image has no entry.
+    private(set) var imageURLs: [Place.ID: URL] = [:]
+    /// Counts the loads that worked. The cards ask again for the images that failed when it changes.
+    private(set) var completedLoadCount = 0
 
     let opener = WikipediaOpener()
 
     @ObservationIgnored @Dependency(\.placesAPI) private var placesAPI
+    @ObservationIgnored @Dependency(\.imagesAPI) private var imagesAPI
     @ObservationIgnored @Dependency(\.placesLocalStorage) private var placesLocalStorage
 
     init() {
@@ -58,6 +64,14 @@ final class PlacesListModel {
     func open(_ place: Place) async -> WikipediaOpener.Outcome {
         await opener.open(place)
     }
+
+    /// Finds a card's image when the card appears. Without one, the card keeps its map pin tile.
+    func loadImage(for place: Place) async {
+        guard let name = place.name, imageURLs[place.id] == nil else { return }
+        if let url = try? await imagesAPI.search(name, place.coordinate) {
+            imageURLs[place.id] = url
+        }
+    }
 }
 
 private extension PlacesListModel {
@@ -74,6 +88,7 @@ private extension PlacesListModel {
             let places = try await placesAPI.fetch()
             content = .loaded(places)
             refreshFailure = nil
+            completedLoadCount += 1
             if !isFirstLoad {
                 updateCount += 1
             }

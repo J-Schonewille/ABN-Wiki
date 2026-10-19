@@ -3,12 +3,12 @@
 This repo contains 2 apps:
 
 1. **Wikipedia** (`Wikipedia/`): the Wikipedia iOS app, changed so every launch opens the Places tab, and so another app can open Places centred on a location.
-2. **ABNPlaces** (`ABNPlaces/`): a SwiftUI app that lists places and opens them in Wikipedia, plus places you add yourself.
+2. **ABNPlaces** (`ABNPlaces/`): a SwiftUI app that lists places, each with a photo from Wikipedia, and opens them in Wikipedia, plus places you add yourself.
 
 <p align="center">
-  <img src="docs/screenshots/open-in-wikipedia.gif" width="260" alt="Tapping a place in ABNPlaces opens Wikipedia's Places tab, centred on that place with a pin">
+  <img src="docs/screenshots/open-in-wikipedia.gif" width="260" alt="The places list, where each photo fades in over its map pin tile. Tapping a place opens Wikipedia's Places tab, centred on that place with a pin">
   &nbsp;&nbsp;
-  <img src="docs/screenshots/add-place.gif" width="260" alt="Adding a place: the form checks the coordinates, then the place appears in the list">
+  <img src="docs/screenshots/add-place.gif" width="260" alt="Adding a place: the form checks the coordinates, then the place appears in the list with its photo">
 </p>
 
 ## Run it
@@ -61,10 +61,11 @@ The app target only shows the root view of the local `ABNPlacesKit` package, whi
 **Dependencies.** swift-dependencies injects:
 
 - `PlacesAPI`, a `@DependencyClient` that loads the feed with an ephemeral session and no cache. In tests it's unimplemented, so a test that forgets to set it fails.
+- `ImagesAPI`, a `@DependencyClient` that finds a place's photo: the lead image of the best matching Wikipedia article within 25 km of the place, so a place called "Home" doesn't get a random photo. It remembers its answers per place while the app runs, and uses the same `HTTPClient.live` as `PlacesAPI`. Unimplemented in tests too.
 - `PlacesLocalStorage`: the places you add, in memory and shared by all windows.
 - `openURL`, to open Wikipedia.
 
-**Data flow.** `PlacesListModel` loads the feed and shows it, followed by the places you added. A tap goes to `WikipediaOpener`, which builds the link with `WikipediaLink` and calls `openURL`; two quick taps open Wikipedia once. When `openURL` returns false, the app shows "Couldn't open Wikipedia", because iOS gives the same answer when Wikipedia isn't installed and when you cancel its prompt. `CreatePlaceModel` reads coordinates typed with a `.` or a `,`, saves the place, and the list updates.
+**Data flow.** `PlacesListModel` loads the feed and shows it, followed by the places you added. A tap goes to `WikipediaOpener`, which builds the link with `WikipediaLink` and calls `openURL`; two quick taps open Wikipedia once. When `openURL` returns false, the app shows "Couldn't open Wikipedia", because iOS gives the same answer when Wikipedia isn't installed and when you cancel its prompt. `CreatePlaceModel` reads coordinates typed with a `.` or a `,`, saves the place, and the list updates. When a card appears, and again after each load that works, it asks `PlacesListModel` for its photo, until it has one. The card shows its map pin tile until the photo fades in, and keeps the tile for a place without a name or a photo.
 
 ## Accessibility
 
@@ -72,18 +73,19 @@ The app target only shows the root view of the local `ABNPlacesKit` package, whi
 
 *An accessibility snapshot from the tests. Each colour is one VoiceOver element. The text is what VoiceOver reads, the italic line is the hint, and the grey label is the name Voice Control responds to.*
 
-- **VoiceOver:** labels on the controls, hints on the cards and fields, headings on the state titles, and coordinates read as words: "52.35 degrees north, 4.83 degrees east" (in Dutch, "graden noord").
+- **VoiceOver:** labels on the controls, hints on the cards and fields, headings on the state titles, and coordinates read as words: "52.35 degrees north, 4.83 degrees east" (in Dutch, "graden noord"). The photos are decoration, so VoiceOver skips them.
 - **Dynamic Type** up to the largest accessibility size. The grid's columns follow the width and the text size. "Add place" is pinned at the bottom with capped text, and moves into the list at the accessibility sizes.
 - **Contrast:** every colour has an Increase Contrast value. Unit tests check that each colour pair meets its WCAG 2.2 contrast minimum, in light and dark, with and without Increase Contrast, and that Increase Contrast never lowers a pair's contrast.
 - **Voice Control:** cards have input labels, so "Tap Amsterdam" works. The fields set them too, but iOS 26.5 ignores them on a text field.
 - **Focus:** Save moves focus to the first invalid field.
+- **Motion:** the photos fade in rather than move, which also suits Reduce Motion.
 - **Keyboard:** ⌘R refreshes, ⌘N adds a place, ⌘Return saves and Esc cancels.
 - **Languages:** English and Dutch.
 
 <p align="center">
-  <img src="docs/screenshots/text-size-default.png" width="260" alt="The places list at the default text size: each card shows the icon, name and coordinates on one row, with Add place pinned at the bottom">
+  <img src="docs/screenshots/text-size-default.png" width="260" alt="The places list at the default text size: each card shows the photo or map pin, name and coordinates on one row, with Add place pinned at the bottom">
   &nbsp;&nbsp;
-  <img src="docs/screenshots/text-size-largest.png" width="260" alt="The places list at the largest accessibility text size: each card stacks the icon, name and coordinates, and nothing is cut off">
+  <img src="docs/screenshots/text-size-largest.png" width="260" alt="The places list at the largest accessibility text size: each card stacks the photo, name and coordinates, and nothing is cut off">
   <br>
   <em>The default text size, and the largest accessibility size.</em>
 </p>
@@ -140,7 +142,6 @@ The launch tab is checked by `HomeUITests/testLaunchOpensPlaces`, in the `Wikipe
 ## Deliberately not built
 
 - Persistence: places you add are gone after a relaunch.
-- Images for the places in the list.
 - Search: there's no search by name and no map picker; you type the coordinates.
 - Separate interface and implementation modules, coordinators, a generic request layer, and CI.
 

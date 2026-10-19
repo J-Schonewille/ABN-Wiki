@@ -21,6 +21,7 @@ final class StubURLProtocol: URLProtocol {
 
     private static let replies = Mutex<[URL: Reply]>([:])
     private static let receivedRequests = Mutex<[URL: URLRequest]>([:])
+    private static let requestCounts = Mutex<[URL: Int]>([:])
 
     /// Registers a reply under a new, unique URL and returns that URL.
     static func register(statusCode: Int, body: Data) throws -> URL {
@@ -29,9 +30,21 @@ final class StubURLProtocol: URLProtocol {
         return url
     }
 
-    /// The request for `url` as it reached the network.
+    /// The last request for `url` as it reached the network.
     static func receivedRequest(for url: URL) -> URLRequest? {
         receivedRequests.withLock { $0[url] }
+    }
+
+    /// How many requests for `url` reached the network.
+    static func requestCount(for url: URL) -> Int {
+        requestCounts.withLock { $0[url, default: 0] }
+    }
+
+    /// `url` without its query, so a client may add query items to the URL it was given.
+    private static func registeredURL(for url: URL) -> URL {
+        var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        components?.query = nil
+        return components?.url ?? url
     }
 
     override static func canInit(with request: URLRequest) -> Bool {
@@ -43,7 +56,12 @@ final class StubURLProtocol: URLProtocol {
     }
 
     override func startLoading() {
-        guard let url = request.url, let reply = Self.replies.withLock({ $0[url] }) else {
+        guard let requestURL = request.url else {
+            client?.urlProtocol(self, didFailWithError: URLError(.unsupportedURL))
+            return
+        }
+        let url = Self.registeredURL(for: requestURL)
+        guard let reply = Self.replies.withLock({ $0[url] }) else {
             client?.urlProtocol(self, didFailWithError: URLError(.unsupportedURL))
             return
         }
@@ -53,6 +71,7 @@ final class StubURLProtocol: URLProtocol {
             return
         }
         Self.receivedRequests.withLock { $0[url] = request }
+        Self.requestCounts.withLock { $0[url, default: 0] += 1 }
         client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
         client?.urlProtocol(self, didLoad: reply.body)
         client?.urlProtocolDidFinishLoading(self)

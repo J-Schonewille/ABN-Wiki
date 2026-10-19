@@ -34,7 +34,6 @@ private struct CardButtonPreview: View {
             Button {
             } label: {
                 DSCard(
-                    symbol: .mapPin,
                     title: Text(verbatim: "Amsterdam"),
                     subtitle: Text(verbatim: "52.3676° N, 4.9041° E"),
                     trailingSymbol: .openInOtherApp
@@ -43,7 +42,6 @@ private struct CardButtonPreview: View {
             Button {
             } label: {
                 DSCard(
-                    symbol: .mapPin,
                     title: Text(verbatim: "Tierra del Fuego National Park, Ushuaia"),
                     subtitle: Text(verbatim: "54.8500° S, 68.5667° W")
                 )

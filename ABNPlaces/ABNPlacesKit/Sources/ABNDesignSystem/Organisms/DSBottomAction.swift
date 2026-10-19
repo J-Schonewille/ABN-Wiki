@@ -43,7 +43,6 @@ private struct BottomActionPreview: View {
                 VStack(spacing: DSSpacing.small) {
                     ForEach(1...12, id: \.self) { number in
                         DSCard(
-                            symbol: .mapPin,
                             title: Text(verbatim: "Place \(number)"),
                             subtitle: Text(verbatim: "52.3676° N, 4.9041° E")
                         )
